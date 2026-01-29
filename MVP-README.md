@@ -338,25 +338,125 @@ registrations
 
 ### ORGANIZER SIDE (Desktop-first):
 
-1. **Dashboard** - List of my events (cards with stats)
-2. **Create Event** - Single-page form
-3. **Event Detail - Overview Tab** - Edit basic event info
-4. **Event Detail - Program Tab** - Build/edit agenda
-5. **Event Detail - Participants Tab** - List + stats + CSV export
-6. **Event Detail - Check-in Tab** - QR scanner camera interface
-7. **Settings** - (Optional Phase 2: Profile edit)
+**Layout Structure:**
+```
+┌─────────────┬─────────────────────────────────────┐
+│             │                                     │
+│ Left Nav    │  Main Content Area                  │
+│             │                                     │
+│ Dashboard   │  (Selected Page Content)            │
+│ Create Event│                                     │
+│ Settings    │                                     │
+│             │                                     │
+└─────────────┴─────────────────────────────────────┘
+```
+
+**Pages:**
+
+1. **Dashboard** 
+   - List of my events (cards with stats)
+   - "Create Event" CTA button
+
+2. **Create Event** 
+   - Single-page form
+   - Submit → redirects to Event Detail
+
+3. **Event Detail** (Single Scrollable Page)
+   - **ONE long page** with all modules vertically stacked:
+   
+   ```
+   ┌─────────────────────────────────┐
+   │ EVENT INFO CELL                 │ ← Top
+   │ [Orange accent]                 │
+   │ Name, Date, Location, Edit      │
+   └─────────────────────────────────┘
+   
+   ┌─────────────────────────────────┐
+   │ PROGRAM BUILDER CELL            │ ← Scroll down
+   │ [Blue accent]                   │
+   │ Sessions, Speakers, +Add        │
+   └─────────────────────────────────┘
+   
+   ┌─────────────────────────────────┐
+   │ QR GENERATOR CELL               │ ← Scroll down
+   │ [Purple accent]                 │
+   │ QR Code, Link, Code sharing     │
+   └─────────────────────────────────┘
+   
+   ┌─────────────────────────────────┐
+   │ PARTICIPANT MANAGEMENT CELL     │ ← Scroll down
+   │ [Green accent]                  │
+   │ List, Stats, Export, +Add       │
+   └─────────────────────────────────┘
+   
+   ┌─────────────────────────────────┐
+   │ QR CHECK-IN CELL                │ ← Scroll down
+   │ [Purple accent]                 │
+   │ Scanner, Recent scans, Stats    │
+   └─────────────────────────────────┘
+   ```
+   
+   **Optional Enhancement (Phase 2):**
+   - Tab switcher at top: [Info] [Program] [Participants] [Check-in]
+   - For users who prefer separated views
+   - Default: Single scrollable page
+
+4. **Settings** 
+   - (Optional Phase 2: Profile edit)
+
+---
 
 ### ATTENDEE SIDE (Mobile-first):
 
-1. **Discover Events** - Browse public events or enter via invite link
-2. **My Events** - List of events I'm registered for
-3. **Event Detail - Info Tab** - Program, location, date
-4. **Event Detail - My QR Tab** - Full-screen QR code
-5. **Event Detail - Networking Tab** - Participant list
-6. **Participant Profile** - View someone's details + LinkedIn link
-7. **Settings** - (Optional Phase 2: My profile edit)
+**Pages:**
 
-**Total: ~12-14 screens** (depending on Settings inclusion)
+1. **Discover Events** 
+   - Browse public events
+   - Enter invite code
+   - Direct link entry
+
+2. **My Events** 
+   - List of events I'm registered for
+   - Upcoming / Past sections
+
+3. **Event Detail** (Single Scrollable Page)
+   - **ONE long page** with all info vertically stacked:
+   
+   ```
+   ┌─────────────────────────────────┐
+   │ EVENT INFO                      │ ← Top
+   │ Cover, Name, Date, Location     │
+   │ Description, Program            │
+   └─────────────────────────────────┘
+   
+   ┌─────────────────────────────────┐
+   │ MY QR CODE CELL                 │ ← Scroll down
+   │ Large QR for check-in           │
+   │ One-tap access                  │
+   └─────────────────────────────────┘
+   
+   ┌─────────────────────────────────┐
+   │ PARTICIPANTS LIST CELL          │ ← Scroll down
+   │ Networking, Search, Filter      │
+   └─────────────────────────────────┘
+   ```
+   
+   **Quick Access:**
+   - Floating "Show My QR" button for instant access
+   - Always visible during event day
+
+4. **Participant Profile** (Modal or separate page)
+   - View someone's details + LinkedIn link
+
+5. **Settings** 
+   - (Optional Phase 2: My profile edit)
+
+---
+
+**Total: ~8-10 core screens** 
+- Simpler navigation with single-page layouts
+- Less cognitive load (scroll vs. tabs)
+- Mobile-friendly (natural scrolling)
 
 ---
 
@@ -368,43 +468,60 @@ registrations
    ↓
 2. Dashboard (empty state: "Create your first event")
    ↓
-3. Click "Create Event"
+3. Click "Create Event" (left nav)
    ↓
 4. Fill form (name, date, location...) → Save
    ↓
-5. Redirected to Event Detail page
+5. Redirected to Event Detail page (single scrollable page)
    ↓
-6. Add sessions to Program tab
+6. Event Info Cell at top (can edit anytime)
    ↓
-7. Invite participants (share link or manual add)
+7. Scroll down → Program Builder Cell → Add sessions
    ↓
-8. On event day: Open Check-in tab → Scan QR codes
+8. Scroll down → QR Generator Cell → Share event (QR/Link/Code)
    ↓
-9. View stats (X/Y checked in)
+9. Scroll down → Participant Management Cell → See registrations
    ↓
-10. After event: Export participant data (CSV)
+10. On event day: Scroll to QR Check-in Cell → Scan QR codes
+   ↓
+11. View real-time stats (checked in counter updates)
+   ↓
+12. After event: Scroll to Participant Management → Export CSV
 ```
+
+**Navigation:**
+- All cells on ONE page
+- Scroll to access different functions
+- Optional: Jump-to links at top (anchor navigation)
 
 ### Attendee Flow:
 ```
-1. Receive invite link OR browse public events
+1. Receive invite link OR browse public events OR enter code
    ↓
-2. Click event → See details
+2. Click event → See event detail page
    ↓
 3. Click "Register" → Fill name, email, company
    ↓
 4. Confirmation + Email sent
    ↓
-5. Before event: Open "My Events" → See program
+5. Event Detail page loads (single scrollable page):
+   - Event info at top (program, speakers, location)
+   - Scroll down → My QR Code Cell
+   - Scroll down → Participants List Cell
    ↓
-6. Before event: Check "Participants" → See who's coming
+6. Before event: Browse participants → Click profiles → Connect on LinkedIn
    ↓
-7. On event day: Open "My QR Code" → Show at entrance
+7. On event day: Scroll to "My QR Code" (or use quick access button)
    ↓
-8. Get checked in by organizer
+8. Show QR at entrance → Get checked in by organizer
    ↓
-9. During event: Browse participants → Click profiles → Connect on LinkedIn
+9. During event: Scroll to Participants → Network with attendees
 ```
+
+**Navigation:**
+- All info on ONE page
+- Natural scroll on mobile
+- Quick access button for QR (floating/sticky)
 
 ---
 
