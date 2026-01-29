@@ -7,10 +7,14 @@
 🚀 Quick Start for New Contributors
 
 Understand the vision → [README.md](./README.md)
+
 Learn the scope → [MVP-README.md](./MVP-README.md)
+
 See the future → [FUTURE-README.md](./FUTURE-README.md)
 
+
 Check design basics → [DESIGN_SYSTEM.md](./DESIGN_SYSTEM.md)
+
 Pick a feature to build → [FEATURE_SPECS.md](./FEATURE_SPECS.md)
 
 ---
@@ -212,12 +216,14 @@ This isn't just another event app - it's a **system designed to optimize human c
 **📚 Documentation**
 
 **Core Documentation**
+
 [README.md](./README.md) (you are here)
 
 Vision and philosophy
 Problem/solution overview
 Target market and competitive positioning
 Why now? Market timing and advantages
+
 
 [MVP-README.md](./MVP-README.md)
 
@@ -229,6 +235,7 @@ User flows (organizer + attendee)
 6-week development timeline
 Definition of "MVP Done"
 
+
 [FUTURE-README.md](./FUTURE-README.md)
 
 Phase 2+ feature ideas
@@ -236,6 +243,7 @@ Cybernetics-powered features (Event Health Score, Smart Networking)
 White-label & enterprise expansion
 Geographic expansion strategy
 Experimental concepts
+
 
 **Development Guides**
 [DESIGN_SYSTEM.md](./DESIGN_SYSTEM.md)
@@ -246,6 +254,7 @@ Typography scale and spacing system
 Component patterns (Cards, Buttons, Inputs)
 Responsive breakpoints
 Start here for UI development
+
 
 [FEATURE_SPECS.md](./FEATURE_SPECS.md)
 
