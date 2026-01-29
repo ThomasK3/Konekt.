@@ -4,6 +4,21 @@
 
 ---
 
+🚀 Quick Start for New Contributors
+
+Understand the vision → **[README.md](./README.md)**
+
+Learn the scope → **[MVP-README.md](./MVP-README.md)**
+
+See the future → **[FUTURE-README.md](./FUTURE-README.md)**
+
+
+Check design basics → **[DESIGN_SYSTEM.md](./DESIGN_SYSTEM.md)**
+
+Pick a feature to build → **[FEATURE_SPECS.md](./FEATURE_SPECS.md)**
+
+---
+
 ## 🎯 Vision
 
 Konekt is an all-in-one event management platform designed for Czech and Slovak startup and business events with 30-150 participants. We're eliminating tool fragmentation that forces organizers to juggle multiple applications and attendees to download different apps for each event.
@@ -198,10 +213,75 @@ This isn't just another event app - it's a **system designed to optimize human c
 
 ---
 
-## 📖 Documentation
+**📚 Documentation**
 
-- **[MVP-README.md](./MVP-README.md)** - Technical implementation details, must-have features, architecture
-- **[FUTURE-README.md](./FUTURE-README.md)** - Phase 2+ features, expansion ideas, advanced functionality
+**Core Documentation**
+
+**[README.md](./README.md) (you are here)**
+
+Vision and philosophy
+Problem/solution overview
+Target market and competitive positioning
+Why now? Market timing and advantages
+
+
+**[MVP-README.md](./MVP-README.md)**
+
+Technical specifications for Phase 1
+Must-have features breakdown
+Tech stack justification (Next.js, Supabase, Tailwind)
+Database schema and architecture
+User flows (organizer + attendee)
+6-week development timeline
+Definition of "MVP Done"
+
+
+**[FUTURE-README.md](./FUTURE-README.md)**
+
+Phase 2+ feature ideas
+Cybernetics-powered features (Event Health Score, Smart Networking)
+White-label & enterprise expansion
+Geographic expansion strategy
+Experimental concepts
+
+
+**Development Guides**
+
+**[DESIGN_SYSTEM.md](./DESIGN_SYSTEM.md)**
+
+Minimal design baseline for MVP
+Color palette (black/white/grey + module accents)
+Typography scale and spacing system
+Component patterns (Cards, Buttons, Inputs)
+Responsive breakpoints
+Start here for UI development
+
+
+**[FEATURE_SPECS.md](./FEATURE_SPECS.md)**
+
+Detailed breakdown of all 11 MVP features
+Step-by-step user flows
+UI component specifications
+Database queries and data requirements
+Edge case handling
+Success criteria for each feature
+Reference guide for Claude Code prompts
+
+**Additional Resources**
+
+**IMPLEMENTATION_PLAN.md (coming soon)**
+
+Week-by-week development roadmap
+Feature prioritization
+Testing strategy
+Deployment checklist
+
+**CLAUDE_CODE_SETUP.md (coming soon)**
+
+Project initialization commands
+Git workflow and branching strategy
+Prompt templates for common tasks
+Debugging and troubleshooting tips
 
 ---
 
