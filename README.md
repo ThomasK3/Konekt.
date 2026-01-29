@@ -6,16 +6,16 @@
 
 🚀 Quick Start for New Contributors
 
-Understand the vision → [README.md](./README.md)
+Understand the vision → **[README.md](./README.md)**
 
-Learn the scope → [MVP-README.md](./MVP-README.md)
+Learn the scope → **[MVP-README.md](./MVP-README.md)**
 
-See the future → [FUTURE-README.md](./FUTURE-README.md)
+See the future → **[FUTURE-README.md](./FUTURE-README.md)**
 
 
-Check design basics → [DESIGN_SYSTEM.md](./DESIGN_SYSTEM.md)
+Check design basics → **[DESIGN_SYSTEM.md](./DESIGN_SYSTEM.md)**
 
-Pick a feature to build → [FEATURE_SPECS.md](./FEATURE_SPECS.md)
+Pick a feature to build → **[FEATURE_SPECS.md](./FEATURE_SPECS.md)**
 
 ---
 
@@ -217,7 +217,7 @@ This isn't just another event app - it's a **system designed to optimize human c
 
 **Core Documentation**
 
-[README.md](./README.md) (you are here)
+**[README.md](./README.md) (you are here)**
 
 Vision and philosophy
 Problem/solution overview
@@ -225,7 +225,7 @@ Target market and competitive positioning
 Why now? Market timing and advantages
 
 
-[MVP-README.md](./MVP-README.md)
+**[MVP-README.md](./MVP-README.md)**
 
 Technical specifications for Phase 1
 Must-have features breakdown
@@ -236,7 +236,7 @@ User flows (organizer + attendee)
 Definition of "MVP Done"
 
 
-[FUTURE-README.md](./FUTURE-README.md)
+**[FUTURE-README.md](./FUTURE-README.md)**
 
 Phase 2+ feature ideas
 Cybernetics-powered features (Event Health Score, Smart Networking)
@@ -246,7 +246,8 @@ Experimental concepts
 
 
 **Development Guides**
-[DESIGN_SYSTEM.md](./DESIGN_SYSTEM.md)
+
+**[DESIGN_SYSTEM.md](./DESIGN_SYSTEM.md)**
 
 Minimal design baseline for MVP
 Color palette (black/white/grey + module accents)
@@ -256,7 +257,7 @@ Responsive breakpoints
 Start here for UI development
 
 
-[FEATURE_SPECS.md](./FEATURE_SPECS.md)
+**[FEATURE_SPECS.md](./FEATURE_SPECS.md)**
 
 Detailed breakdown of all 11 MVP features
 Step-by-step user flows
@@ -267,14 +268,15 @@ Success criteria for each feature
 Reference guide for Claude Code prompts
 
 **Additional Resources**
-IMPLEMENTATION_PLAN.md (coming soon)
+
+**IMPLEMENTATION_PLAN.md (coming soon)**
 
 Week-by-week development roadmap
 Feature prioritization
 Testing strategy
 Deployment checklist
 
-CLAUDE_CODE_SETUP.md (coming soon)
+**CLAUDE_CODE_SETUP.md (coming soon)**
 
 Project initialization commands
 Git workflow and branching strategy
