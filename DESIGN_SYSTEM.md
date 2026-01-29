@@ -360,7 +360,7 @@ transition: transform 0.2s ease, box-shadow 0.2s ease;
 
 ## 📝 Evolution Notes
 
-**Během vývoje se zaměříme, až řeknu na:**
+**Během vývoje se společně zaměříme na:**
 - Connection lines (mezi moduly)
 - Subtle animations (hover, transitions)
 - More sophisticated shadows

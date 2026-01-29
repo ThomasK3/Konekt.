@@ -4,21 +4,6 @@
 
 ---
 
-🚀 Quick Start for New Contributors
-
-Understand the vision → **[README.md](./README.md)**
-
-Learn the scope → **[MVP-README.md](./MVP-README.md)**
-
-See the future → **[FUTURE-README.md](./FUTURE-README.md)**
-
-
-Check design basics → **[DESIGN_SYSTEM.md](./DESIGN_SYSTEM.md)**
-
-Pick a feature to build → **[FEATURE_SPECS.md](./FEATURE_SPECS.md)**
-
----
-
 ## 🎯 Vision
 
 Konekt is an all-in-one event management platform designed for Czech and Slovak startup and business events with 30-150 participants. We're eliminating tool fragmentation that forces organizers to juggle multiple applications and attendees to download different apps for each event.
@@ -213,75 +198,84 @@ This isn't just another event app - it's a **system designed to optimize human c
 
 ---
 
-**📚 Documentation**
+## 📚 Documentation
 
-**Core Documentation**
+### Core Documentation
 
-**[README.md](./README.md) (you are here)**
-
-Vision and philosophy
-Problem/solution overview
-Target market and competitive positioning
-Why now? Market timing and advantages
-
+**[README.md](./README.md)** *(you are here)*
+- Vision and philosophy
+- Problem/solution overview
+- Target market and competitive positioning
+- Why now? Market timing and advantages
 
 **[MVP-README.md](./MVP-README.md)**
-
-Technical specifications for Phase 1
-Must-have features breakdown
-Tech stack justification (Next.js, Supabase, Tailwind)
-Database schema and architecture
-User flows (organizer + attendee)
-6-week development timeline
-Definition of "MVP Done"
-
+- Technical specifications for Phase 1
+- Must-have features breakdown
+- Tech stack justification (Next.js, Supabase, Tailwind)
+- Database schema and architecture
+- User flows (organizer + attendee)
+- 6-week development timeline
+- Definition of "MVP Done"
 
 **[FUTURE-README.md](./FUTURE-README.md)**
+- Phase 2+ feature ideas
+- Cybernetics-powered features (Event Health Score, Smart Networking)
+- White-label & enterprise expansion
+- Geographic expansion strategy
+- Experimental concepts
 
-Phase 2+ feature ideas
-Cybernetics-powered features (Event Health Score, Smart Networking)
-White-label & enterprise expansion
-Geographic expansion strategy
-Experimental concepts
-
-
-**Development Guides**
+### Development Guides
 
 **[DESIGN_SYSTEM.md](./DESIGN_SYSTEM.md)**
-
-Minimal design baseline for MVP
-Color palette (black/white/grey + module accents)
-Typography scale and spacing system
-Component patterns (Cards, Buttons, Inputs)
-Responsive breakpoints
-Start here for UI development
-
+- Minimal design baseline for MVP
+- Color palette (black/white/grey + module accents)
+- Typography scale and spacing system
+- Component patterns (Cards, Buttons, Inputs)
+- Responsive breakpoints
+- **Start here for UI development**
 
 **[FEATURE_SPECS.md](./FEATURE_SPECS.md)**
+- Detailed breakdown of all 11 MVP features
+- Step-by-step user flows
+- UI component specifications
+- Database queries and data requirements
+- Edge case handling
+- Success criteria for each feature
+- **Reference guide for Claude Code prompts**
 
-Detailed breakdown of all 11 MVP features
-Step-by-step user flows
-UI component specifications
-Database queries and data requirements
-Edge case handling
-Success criteria for each feature
-Reference guide for Claude Code prompts
+### Additional Resources
 
-**Additional Resources**
+**[CLAUDE_CODE_SETUP.md](./CLAUDE_CODE_SETUP.md)**
+- Complete project initialization guide
+- Next.js 14 + Supabase setup instructions
+- Professional folder structure
+- Role-based architecture patterns
+- Cell development workflow
+- Code quality checklist
+- **Start here for development setup**
 
-**IMPLEMENTATION_PLAN.md (coming soon)**
+**[IMPLEMENTATION_PLAN.md](./IMPLEMENTATION_PLAN.md)** *(coming soon)*
+- Week-by-week development roadmap
+- Feature prioritization
+- Testing strategy
+- Deployment checklist
 
-Week-by-week development roadmap
-Feature prioritization
-Testing strategy
-Deployment checklist
+**[CLAUDE_CODE_SETUP.md](./CLAUDE_CODE_SETUP.md)** *(coming soon)*
+- Project initialization commands
+- Git workflow and branching strategy
+- Prompt templates for common tasks
+- Debugging and troubleshooting tips
 
-**CLAUDE_CODE_SETUP.md (coming soon)**
+---
 
-Project initialization commands
-Git workflow and branching strategy
-Prompt templates for common tasks
-Debugging and troubleshooting tips
+## 🚀 Quick Start for New Contributors
+
+1. **Understand the vision** → Read [README.md](./README.md)
+2. **Learn the scope** → Read [MVP-README.md](./MVP-README.md)
+3. **Set up the project** → Follow [CLAUDE_CODE_SETUP.md](./CLAUDE_CODE_SETUP.md)
+4. **Check design basics** → Read [DESIGN_SYSTEM.md](./DESIGN_SYSTEM.md)
+5. **Pick a feature to build** → Read [FEATURE_SPECS.md](./FEATURE_SPECS.md)
+6. **Start coding** → Use feature specs as prompt guide
 
 ---
 
