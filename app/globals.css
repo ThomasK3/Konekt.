@@ -170,7 +170,7 @@
     background: transparent;
     color: #212529;
     border: 2px solid #212529;
-    @apply rounded-pill px-6 py-3 text-base font-semibold;
+    @apply rounded-pill px-7 py-3.5 text-base font-semibold;
     transition: all 0.2s ease;
     cursor: pointer;
     display: inline-flex;
@@ -415,10 +415,10 @@
   /* Main Content Area */
   .main-content {
     margin-left: 224px;
-    margin-right: auto;
+    margin-right: 24px;
     margin-top: 24px;
     margin-bottom: 100px;
-    max-width: 1200px;
+    max-width: 100%;
     padding-left: 24px;
     padding-right: 24px;
   }
