@@ -1,374 +1,777 @@
-# Konekt Design System - MVP Baseline
+# Konekt Design System - TripGlide Edition
 
-> **Minimální design základ pro rychlý start. Detaily řešíme iterativně během vývoje.**
+> **Image-driven, bold & clean. Travel app aesthetics meet event management.**
 
 ---
 
-## 🎨 Color Palette
+## 🎨 Design Philosophy
 
-### Base Colors
+### Core Principles
+1. **Image-First** - Beautiful event photography drives the experience
+2. **Bold Typography** - Strong, readable hierarchy with Instrument Sans
+3. **Rounded Everything** - Soft, approachable aesthetic (24px+ corners)
+4. **Dark Accents** - Black buttons and text for strong contrast
+5. **Minimal Color** - Let event images provide color, UI stays monochrome
+
+**Inspiration:** TripGlide mobile app - modern travel UI adapted for event management
+
+---
+
+## 🖤 Color Palette
+
+### Base Colors (Monochrome Focus)
+
 ```css
---white: #FFFFFF          /* Primary background */
---black: #000000          /* Primary text */
---grey-50: #F9FAFB        /* Page background */
---grey-100: #F3F4F6       /* Subtle borders */
---grey-300: #D1D5DB       /* Borders */
---grey-500: #6B7280       /* Secondary text */
---grey-700: #374151       /* Dark text */
+/* Backgrounds */
+--white: #FFFFFF           /* Cards, surfaces */
+--grey-50: #F5F6F7         /* Page background */
+--grey-100: #EAEBED        /* Alternative surfaces */
+
+/* Text */
+--black: #212529           /* Primary text, dark buttons */
+--grey-600: #6C757D        /* Secondary text */
+--grey-400: #ADB5BD        /* Tertiary text, placeholders */
+
+/* Borders */
+--grey-200: #DEE2E6        /* Subtle dividers */
+--grey-300: #CED4DA        /* Visible borders */
+
+/* Image Overlays */
+--overlay-gradient: linear-gradient(
+  180deg,
+  rgba(0,0,0,0) 0%,
+  rgba(0,0,0,0.7) 100%
+);
 ```
 
-### Module Accent Colors
+### Accent Colors (Minimal Use)
+
+**Use ONLY for status indicators and data visualization:**
+
 ```css
---orange: #FF6B35         /* Event Info module */
---blue: #4A90E2           /* Program module */
---green: #50C878          /* Participants module */
---purple: #9B59B6         /* Check-in module */
+/* Status colors */
+--accent-blue: #4A90E2      /* Info, links */
+--accent-green: #10B981     /* Success, confirmed */
+--accent-orange: #F97316    /* Warning, pending */
+--accent-red: #EF4444       /* Error, cancelled */
 ```
 
-### Usage
-- **Page background:** `grey-50` (#F9FAFB)
-- **Card background:** `white` (#FFFFFF)
-- **Primary text:** `black` (#000000)
-- **Secondary text:** `grey-500` (#6B7280)
-- **Module accents:** Top border nebo icon background
+**Where to use accents:**
+✅ Status badges ("Registered", "Checked-in")  
+✅ Data charts (minimal)  
+✅ Icons (sparingly)  
+
+❌ NOT for buttons (use black)  
+❌ NOT for card backgrounds  
+❌ NOT as primary UI elements  
 
 ---
 
 ## 📏 Spacing System
 
-**Base unit:** 4px
+**Base unit:** 8px  
+**Philosophy:** Generous but not excessive
 
-### Scale
 ```css
---space-1: 4px
---space-2: 8px
---space-3: 12px
---space-4: 16px
---space-5: 20px
---space-6: 24px
---space-8: 32px
---space-10: 40px
---space-12: 48px
---space-16: 64px
+/* Tight */
+--space-1: 8px
+--space-2: 16px
+
+/* Standard */
+--space-3: 24px
+--space-4: 32px
+
+/* Generous */
+--space-6: 48px
+--space-8: 64px
 ```
 
-### Common Uses
-- **Card padding:** 24px (`space-6`)
-- **Gap between cards:** 16px (`space-4`) mobile, 24px (`space-6`) desktop
-- **Button padding:** 12px 24px (`space-3` `space-6`)
-- **Input padding:** 12px 16px (`space-3` `space-4`)
+### Common Uses:
+
+```css
+/* Cards */
+padding: 24px;              /* Card content */
+border-radius: 24px;        /* Card corners */
+gap: 16px;                  /* Between cards (mobile) */
+gap: 24px;                  /* Between cards (desktop) */
+
+/* Sections */
+margin-bottom: 48px;        /* Between major sections */
+
+/* Page */
+padding: 24px;              /* Page padding (mobile) */
+padding: 32px 48px;         /* Page padding (desktop) */
+```
 
 ---
 
-## 🔤 Typography
+## 🔤 Typography - Instrument Sans
 
-### Font Family
+### Font Setup
+
 ```css
-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap');
+
+font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 ```
-**Note:** Inter z Google Fonts pokud chceš konzistentnější, jinak system fonts.
 
-### Font Sizes
+**Why Instrument Sans:**
+- ✅ Modern geometric sans-serif
+- ✅ Excellent screen readability
+- ✅ Professional yet approachable
+- ✅ Used by TripGlide and modern travel apps
+- ✅ Free via Google Fonts
+
+### Type Scale
+
 ```css
---text-xs: 12px
---text-sm: 14px
---text-base: 16px
---text-lg: 18px
---text-xl: 20px
---text-2xl: 24px
---text-3xl: 30px
---text-4xl: 36px
+/* Display */
+--text-display: 48px;       /* Hero sections */
+--text-h1: 32px;            /* Page titles */
+--text-h2: 28px;            /* Section headers */
+--text-h3: 22px;            /* Card titles */
+--text-h4: 18px;            /* Subheadings */
+
+/* Body */
+--text-large: 17px;         /* Prominent text */
+--text-base: 16px;          /* Standard body */
+--text-small: 14px;         /* Secondary text */
+--text-tiny: 12px;          /* Labels, captions */
 ```
 
 ### Font Weights
+
 ```css
---font-normal: 400
---font-medium: 500
---font-semibold: 600
---font-bold: 700
+--font-regular: 400         /* Body text */
+--font-medium: 500          /* Emphasis */
+--font-semibold: 600        /* Headings, buttons */
+--font-bold: 700            /* Strong emphasis */
 ```
 
-### Usage Examples
-```css
-/* Heading 1 */
-font-size: 36px;
-font-weight: 700;
-color: #000000;
-
-/* Heading 2 */
-font-size: 24px;
-font-weight: 600;
-color: #000000;
-
-/* Body text */
-font-size: 16px;
-font-weight: 400;
-color: #000000;
-
-/* Secondary text */
-font-size: 14px;
-font-weight: 400;
-color: #6B7280;
-
-/* Small text (labels, captions) */
-font-size: 12px;
-font-weight: 400;
-color: #6B7280;
-```
-
----
-
-## 🧩 Component Basics
-
-### Card / Module Cell
-```css
-background: #FFFFFF;
-border-radius: 16px;
-padding: 24px;
-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-border-top: 3px solid [accent-color]; /* Optional accent */
-```
-
-**Variants:**
-- **With accent:** 3px colored top border
-- **Neutral:** No colored border
-- **Hover:** `box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);`
-
----
-
-### Button
-```css
-/* Primary button */
-background: #000000;
-color: #FFFFFF;
-padding: 12px 24px;
-border-radius: 8px;
-font-size: 16px;
-font-weight: 600;
-border: none;
-cursor: pointer;
-
-/* Hover */
-background: #374151; /* grey-700 */
-
-/* With accent color */
-background: #FF6B35; /* orange */
-```
+### Typography Examples
 
 ```css
-/* Secondary button */
-background: transparent;
-color: #000000;
-border: 1px solid #D1D5DB; /* grey-300 */
-padding: 12px 24px;
-border-radius: 8px;
+/* Page Title */
+h1 {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #212529;
+  letter-spacing: -0.02em;
+}
 
-/* Hover */
-background: #F9FAFB; /* grey-50 */
+/* Card Title */
+h3 {
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #212529;
+}
+
+/* Body Text */
+p {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #212529;
+}
+
+/* Secondary Text */
+.text-secondary {
+  font-size: 14px;
+  font-weight: 400;
+  color: #6C757D;
+}
+
+/* Text over images */
+.text-overlay {
+  color: #FFFFFF;
+  font-weight: 600;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
 ```
 
 ---
 
-### Input Field
+## 🧩 Component Patterns
+
+### Card - Image-Driven
+
+**Primary card with event photo:**
+
 ```css
-background: #FFFFFF;
-border: 1px solid #D1D5DB; /* grey-300 */
-border-radius: 8px;
-padding: 12px 16px;
-font-size: 16px;
-color: #000000;
+.card {
+  background: #FFFFFF;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.08),
+    0 2px 4px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease;
+}
 
-/* Focus */
-border-color: #000000;
-outline: none;
-box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+.card:hover {
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.12),
+    0 4px 8px rgba(0, 0, 0, 0.06);
+  transform: translateY(-4px);
+}
 
-/* Error */
-border-color: #EF4444; /* red */
+/* Image container */
+.card-image {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Dark gradient overlay */
+.card-image::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60%;
+  background: linear-gradient(
+    180deg,
+    rgba(0,0,0,0) 0%,
+    rgba(0,0,0,0.7) 100%
+  );
+  pointer-events: none;
+}
+
+/* Text over image */
+.card-image-content {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  z-index: 1;
+  color: #FFFFFF;
+}
+
+.card-image-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #FFFFFF;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  margin-bottom: 4px;
+}
+
+.card-image-subtitle {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.9);
+  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+/* Card body (below image) */
+.card-body {
+  padding: 20px 24px 24px;
+}
 ```
 
----
-
-### Icon Background (for module headers)
-```css
-width: 40px;
-height: 40px;
-border-radius: 8px;
-background: rgba(255, 107, 53, 0.15); /* 15% opacity of accent color */
-display: flex;
-align-items: center;
-justify-content: center;
-```
-
----
-
-## 📐 Layout
-
-### Page Structure
-```css
-/* Page wrapper */
-background: #F9FAFB; /* grey-50 */
-min-height: 100vh;
-padding: 24px;
-
-/* Content container */
-max-width: 1200px;
-margin: 0 auto;
-```
-
-### Grid / Flexbox Spacing
-```css
-/* Card grid */
-display: grid;
-gap: 24px;
-grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-
-/* Or flexbox */
-display: flex;
-gap: 16px;
-flex-wrap: wrap;
-```
-
----
-
-## 🎭 States
-
-### Loading State (Skeleton)
-```css
-background: linear-gradient(
-  90deg,
-  #F3F4F6 25%,
-  #E5E7EB 50%,
-  #F3F4F6 75%
-);
-animation: loading 1.5s infinite;
-border-radius: 8px;
-```
-
-### Empty State
-- Grey text (`grey-500`)
-- Icon (optional)
-- Call-to-action button
-
-### Error State
-- Red text (`#EF4444`)
-- Border červený
-- Clear error message
-
----
-
-## 📱 Responsive Breakpoints
+**Simple card (no image):**
 
 ```css
-/* Mobile first approach */
---mobile: 0px;
---tablet: 768px;
---desktop: 1024px;
---wide: 1280px;
-```
-
-### Usage
-```css
-/* Mobile (default) */
-padding: 16px;
-
-/* Tablet and up */
-@media (min-width: 768px) {
+.card-simple {
+  background: #FFFFFF;
+  border-radius: 20px;
   padding: 24px;
-}
-
-/* Desktop and up */
-@media (min-width: 1024px) {
-  padding: 32px;
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.06),
+    0 1px 2px rgba(0, 0, 0, 0.03);
 }
 ```
 
----
-
-## ✨ Effects (Minimal)
-
-### Shadow / Glow
-```css
-/* Default card shadow */
-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-
-/* Hover / elevated */
-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-
-/* Focus ring */
-box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
-```
-
-### Transitions
-```css
-/* Default */
-transition: all 0.2s ease;
-
-/* Hover effects */
-transition: transform 0.2s ease, box-shadow 0.2s ease;
-```
-
----
-
-## 🚀 Implementation Notes
-
-### Tailwind CSS Classes (if using)
+**Example HTML:**
 ```html
-<!-- Card -->
-<div class="bg-white rounded-2xl p-6 shadow-sm border-t-4 border-orange">
-
-<!-- Button Primary -->
-<button class="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-grey-700">
-
-<!-- Input -->
-<input class="border border-grey-300 rounded-lg px-4 py-3 w-full focus:border-black focus:ring-2 focus:ring-black/10">
+<!-- Event Card with Image -->
+<div class="card">
+  <div class="card-image">
+    <img src="event-photo.jpg" alt="Startup Meetup">
+    <div class="card-image-content">
+      <h3 class="card-image-title">Startup Meetup Prague</h3>
+      <p class="card-image-subtitle">March 15 • 18:00 • Karlin Hall</p>
+    </div>
+  </div>
+  <div class="card-body">
+    <p class="text-secondary">50 registered</p>
+  </div>
+</div>
 ```
 
-### CSS Variables (if using vanilla CSS)
+---
+
+### Buttons - Dark & Bold
+
+**Primary Button (Black/Dark):**
+
 ```css
-:root {
-  --color-white: #FFFFFF;
-  --color-black: #000000;
-  --color-grey-50: #F9FAFB;
-  --color-grey-300: #D1D5DB;
-  --color-grey-500: #6B7280;
+.btn-primary {
+  /* Dark background */
+  background: #212529;
   
-  --color-orange: #FF6B35;
-  --color-blue: #4A90E2;
-  --color-green: #50C878;
-  --color-purple: #9B59B6;
+  /* Rounded pill shape */
+  border-radius: 100px;
+  padding: 14px 28px;
   
-  --space-4: 16px;
-  --space-6: 24px;
+  /* Typography */
+  font-size: 16px;
+  font-weight: 600;
+  color: #FFFFFF;
+  letter-spacing: -0.01em;
   
-  --radius-lg: 16px;
-  --radius-md: 8px;
+  /* Shadow */
+  box-shadow: 
+    0 4px 12px rgba(33, 37, 41, 0.2),
+    0 2px 4px rgba(33, 37, 41, 0.1);
+  
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: #343A40;
+  transform: translateY(-2px);
+  box-shadow: 
+    0 6px 20px rgba(33, 37, 41, 0.25);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+```
+
+**Secondary Button (Outlined):**
+
+```css
+.btn-secondary {
+  background: transparent;
+  border: 2px solid #212529;
+  border-radius: 100px;
+  padding: 12px 26px;
+  
+  font-size: 16px;
+  font-weight: 600;
+  color: #212529;
+  
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background: #212529;
+  color: #FFFFFF;
+}
+```
+
+**Icon Button (Circle):**
+
+```css
+.btn-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  
+  background: #FFFFFF;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  color: #212529;
+  transition: all 0.2s ease;
+}
+
+.btn-icon:hover {
+  background: #F5F6F7;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transform: scale(1.05);
+}
+
+/* Favorite/Heart button (floating on images) */
+.btn-favorite {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(10px);
+  
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+```
+
+**React Component:**
+```tsx
+export function Button({ 
+  children, 
+  variant = 'primary',
+  onClick 
+}: ButtonProps) {
+  const variants = {
+    primary: 'btn-primary',
+    secondary: 'btn-secondary',
+    icon: 'btn-icon',
+  }
+  
+  return (
+    <button 
+      className={variants[variant]}
+      onClick={onClick}
+    >
+      {children}
+    </button>
+  )
 }
 ```
 
 ---
 
-## 🎯 Design Principles for MVP
+### Input Fields
 
-1. **Start minimal** - Černá/bílá/šedá základ, akcenty jen kde potřeba
-2. **Consistency over creativity** - Používej stejné patterns všude
-3. **Function first** - Pokud něco funguje ale není krásné, OK pro MVP
-4. **Iterate visually** - Když vidíš kód živě, upravuj design
-5. **No premature optimization** - Fancy animace až Phase 2
+```css
+.input {
+  background: #F5F6F7;
+  border: 2px solid transparent;
+  border-radius: 16px;
+  padding: 14px 16px;
+  
+  font-size: 16px;
+  font-weight: 400;
+  color: #212529;
+  
+  transition: all 0.2s ease;
+}
+
+.input::placeholder {
+  color: #ADB5BD;
+}
+
+.input:focus {
+  outline: none;
+  background: #FFFFFF;
+  border-color: #212529;
+  box-shadow: 0 0 0 4px rgba(33, 37, 41, 0.1);
+}
+
+/* Search input */
+.search-wrapper {
+  position: relative;
+}
+
+.search-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6C757D;
+}
+
+.search-input {
+  padding-left: 48px;
+}
+```
 
 ---
 
-## 📝 Evolution Notes
+### Navigation - Rounded Pill (Bottom)
 
-**Během vývoje se společně zaměříme na:**
-- Connection lines (mezi moduly)
-- Subtle animations (hover, transitions)
-- More sophisticated shadows
-- Module-specific styling
-- Dark mode (later)
+**TripGlide-style floating bottom nav:**
 
-**Ale pro start: Keep it simple.** ✅
+```css
+.bottom-nav {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  
+  /* Pill shape */
+  background: #212529;
+  border-radius: 100px;
+  padding: 12px 24px;
+  
+  /* Shadow */
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.2),
+    0 4px 12px rgba(0, 0, 0, 0.15);
+  
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  
+  z-index: 100;
+}
+
+.nav-item {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  color: rgba(255,255,255,0.6);
+  transition: all 0.2s ease;
+}
+
+.nav-item:hover {
+  color: #FFFFFF;
+  background: rgba(255,255,255,0.1);
+}
+
+.nav-item.active {
+  background: #FFFFFF;
+  color: #212529;
+}
+```
+
+**Mobile responsive:**
+```css
+@media (max-width: 767px) {
+  .bottom-nav {
+    bottom: 16px;
+    left: 16px;
+    right: 16px;
+    transform: none;
+    width: calc(100% - 32px);
+  }
+}
+```
+
+**Example HTML:**
+```html
+<nav class="bottom-nav">
+  <a href="/" class="nav-item active">
+    <svg><!-- home icon --></svg>
+  </a>
+  <a href="/events" class="nav-item">
+    <svg><!-- calendar icon --></svg>
+  </a>
+  <a href="/favorites" class="nav-item">
+    <svg><!-- heart icon --></svg>
+  </a>
+  <a href="/profile" class="nav-item">
+    <svg><!-- user icon --></svg>
+  </a>
+</nav>
+```
 
 ---
 
-**Tohle je baseline. Builduj funkčnost, design ladíme průběžně.**
+### Status Badges
+
+```css
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  
+  padding: 6px 12px;
+  border-radius: 100px;
+  
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.badge-success {
+  background: #10B981;
+  color: #FFFFFF;
+}
+
+.badge-warning {
+  background: #F97316;
+  color: #FFFFFF;
+}
+
+.badge-info {
+  background: #4A90E2;
+  color: #FFFFFF;
+}
+
+.badge-subtle {
+  background: #F5F6F7;
+  color: #6C757D;
+  border: 1px solid #DEE2E6;
+}
+```
+
+---
+
+## 📐 Layout Structure
+
+### Page Layout
+
+```css
+.page {
+  min-height: 100vh;
+  background: #F5F6F7;
+  padding: 24px;
+  padding-bottom: 120px;    /* Space for bottom nav */
+}
+
+@media (min-width: 768px) {
+  .page {
+    padding: 48px;
+  }
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+```
+
+### Grid Layout
+
+```css
+.grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+```
+
+---
+
+## ✨ Image Treatments
+
+### Hero Image
+
+```css
+.hero-image {
+  width: 100%;
+  height: 400px;
+  border-radius: 24px;
+  overflow: hidden;
+  position: relative;
+}
+
+.hero-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 32px;
+  
+  background: linear-gradient(
+    180deg,
+    rgba(0,0,0,0) 0%,
+    rgba(0,0,0,0.85) 100%
+  );
+}
+
+.hero-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #FFFFFF;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.5);
+}
+```
+
+### Avatar/Profile Image
+
+```css
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #FFFFFF;
+}
+
+.avatar-large {
+  width: 80px;
+  height: 80px;
+}
+```
+
+---
+
+## 📱 Responsive Behavior
+
+```css
+/* Mobile: Stack everything, full-width buttons */
+@media (max-width: 767px) {
+  .btn-primary {
+    width: 100%;
+  }
+  
+  .card {
+    margin-bottom: 16px;
+  }
+}
+
+/* Desktop: More spacious */
+@media (min-width: 1024px) {
+  .page {
+    padding: 64px 48px;
+  }
+  
+  .card {
+    margin-bottom: 24px;
+  }
+}
+```
+
+---
+
+## 🎯 Design Principles
+
+**TripGlide-Inspired:**
+
+✅ **Image-first** - Event photos are the star  
+✅ **Bold dark buttons** - Black primary (not colorful)  
+✅ **Rounded pills** - Navigation, buttons, badges  
+✅ **Strong shadows** - Physical depth, not subtle  
+✅ **Instrument Sans** - Modern, geometric  
+✅ **Minimal color** - Let images provide color  
+✅ **Text overlays** - Dark gradients for readability  
+✅ **Very rounded** - 24px cards, 100px buttons  
+✅ **Clean & simple** - No unnecessary decoration  
+
+**What makes this work:**
+- Event photography = natural color and personality
+- Dark buttons = strong CTAs that pop
+- Rounded shapes = friendly, approachable
+- Monochrome UI = lets content shine
+- Bottom pill nav = modern, mobile-optimized
+
+---
+
+**This is travel app aesthetics for event management. Visual, bold, modern.** 🚀
