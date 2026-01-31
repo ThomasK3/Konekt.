@@ -39,8 +39,8 @@ export function Cell({
     >
       {/* Header */}
       {(title || icon || actions) && (
-        <div className="flex items-start justify-between gap-4 mb-4">
-          <div className="flex items-start gap-3 flex-1">
+        <div className="flex flex-wrap items-start gap-3 mb-4">
+          <div className="flex items-start gap-3 flex-1 min-w-0">
             {/* Icon */}
             {icon && (
               <div className="w-12 h-12 rounded-md flex items-center justify-center flex-shrink-0 bg-bg-page transition-transform hover:scale-105">
@@ -62,7 +62,7 @@ export function Cell({
           </div>
 
           {/* Actions */}
-          {actions && <div className="flex-shrink-0">{actions}</div>}
+          {actions && <div className="flex-shrink-0 w-full sm:w-auto sm:ml-auto">{actions}</div>}
         </div>
       )}
 
