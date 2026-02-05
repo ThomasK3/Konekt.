@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Dashboard - Konekt",
+  title: "Dashboard - Konekt.",
   description: "Organizer dashboard for event management",
 };
 

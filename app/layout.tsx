@@ -11,7 +11,7 @@ const instrumentSans = Instrument_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Konekt - Event Management Platform",
+  title: "Konekt. - Event Management Platform",
   description: "One platform instead of five. Event management without fragmentation.",
 };
 

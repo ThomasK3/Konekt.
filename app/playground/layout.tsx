@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Playground - Konekt",
+  title: "Playground - Konekt.",
   description: "TripGlide design system playground",
 };
 

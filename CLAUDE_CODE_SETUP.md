@@ -1,4 +1,4 @@
-# Konekt - Claude Code Setup Guide
+# Konekt. - Claude Code Setup Guide
 
 > **Complete setup guide for professional Next.js 14 + Supabase architecture with modular cell system**
 

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Create Event - Konekt",
+  title: "Create Event - Konekt.",
   description: "Create a new event",
 };
 

@@ -13,6 +13,11 @@ const navigation = [
 export function Navigation() {
   const pathname = usePathname();
 
+  // Hide navigation on organizer pages (they have their own Bottom Nav + Left Sidebar)
+  if (pathname.startsWith("/organizer")) {
+    return null;
+  }
+
   return (
     <nav className="bg-white border-b border-border-light">
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4">

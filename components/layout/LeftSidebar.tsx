@@ -6,17 +6,19 @@ interface SidebarItem {
   id: string;
   label: string;
   icon: React.ReactNode;
+  badge?: number | string;
 }
 
 interface LeftSidebarProps {
+  items?: SidebarItem[];
   activeItem: string;
   onItemClick: (id: string) => void;
   isOpen: boolean;
   onClose: () => void;
 }
 
-export function LeftSidebar({ activeItem, onItemClick, isOpen, onClose }: LeftSidebarProps) {
-  const sidebarItems: SidebarItem[] = [
+export function LeftSidebar({ items, activeItem, onItemClick, isOpen, onClose }: LeftSidebarProps) {
+  const defaultSidebarItems: SidebarItem[] = [
     {
       id: "overview",
       label: "Overview",
@@ -59,6 +61,8 @@ export function LeftSidebar({ activeItem, onItemClick, isOpen, onClose }: LeftSi
       ),
     },
   ];
+
+  const sidebarItems = items || defaultSidebarItems;
 
   const handleItemClick = (id: string) => {
     onItemClick(id);
@@ -109,7 +113,12 @@ export function LeftSidebar({ activeItem, onItemClick, isOpen, onClose }: LeftSi
               )}
             >
               <span className="sidebar-item-icon">{item.icon}</span>
-              <span>{item.label}</span>
+              <span className="flex-1 text-left">{item.label}</span>
+              {item.badge !== undefined && (
+                <span className="ml-auto px-2 py-0.5 text-xs font-semibold rounded-full bg-text-primary text-white">
+                  {item.badge}
+                </span>
+              )}
             </button>
           ))}
         </nav>

@@ -1,4 +1,4 @@
-# Konekt MVP - Technical Specification
+# Konekt. MVP - Technical Specification
 
 > **Phase 1: Minimum Viable Product for March 2026 Demo**
 

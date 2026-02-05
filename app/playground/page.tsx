@@ -9,6 +9,283 @@ import { EventCard } from "@/components/cards/EventCard";
 import { BottomNav } from "@/components/layout/BottomNav";
 import { cn } from "@/lib/utils";
 
+// Data colors for charts and visualizations
+const dataColors = {
+  coral: "#e66467",
+  orange: "#f29639",
+  darkBlue: "#315771",
+  teal: "#409f9c",
+};
+
+// Sample data for charts
+const eventData = [
+  { month: "Jan", registrations: 45, checkIns: 42 },
+  { month: "Feb", registrations: 67, checkIns: 61 },
+  { month: "Mar", registrations: 89, checkIns: 85 },
+  { month: "Apr", registrations: 120, checkIns: 110 },
+  { month: "May", registrations: 98, checkIns: 92 },
+  { month: "Jun", registrations: 145, checkIns: 138 },
+];
+
+const attendanceByType = [
+  { type: "Conferences", value: 35, color: dataColors.coral },
+  { type: "Workshops", value: 25, color: dataColors.orange },
+  { type: "Meetups", value: 30, color: dataColors.darkBlue },
+  { type: "Networking", value: 10, color: dataColors.teal },
+];
+
+// Bar Chart Component with Gradient
+function BarChart({ data }: { data: typeof eventData }) {
+  const maxValue = Math.max(...data.map((d) => Math.max(d.registrations, d.checkIns)));
+
+  return (
+    <div className="space-y-4">
+      <div className="flex justify-end gap-4 text-small">
+        <div className="flex items-center gap-2">
+          <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: dataColors.coral }} />
+          <span>Registrations</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: dataColors.darkBlue }} />
+          <span>Check-ins</span>
+        </div>
+      </div>
+
+      <div className="relative" style={{ height: '280px' }}>
+        <div className="absolute inset-0 flex items-end justify-between gap-3">
+          {data.map((item, index) => {
+            const regHeight = (item.registrations / maxValue) * 240;
+            const checkInHeight = (item.checkIns / maxValue) * 240;
+
+            return (
+              <div key={index} className="flex-1 flex flex-col items-center gap-2">
+                <div className="w-full flex items-end justify-center gap-1.5" style={{ height: '240px' }}>
+                  <div
+                    className="w-full rounded-t-md transition-all hover:opacity-80 cursor-pointer"
+                    style={{
+                      height: `${regHeight}px`,
+                      background: `linear-gradient(180deg, ${dataColors.coral}, ${dataColors.orange})`,
+                    }}
+                    title={`${item.registrations} registrations`}
+                  />
+                  <div
+                    className="w-full rounded-t-md transition-all hover:opacity-80 cursor-pointer"
+                    style={{
+                      height: `${checkInHeight}px`,
+                      background: `linear-gradient(180deg, ${dataColors.darkBlue}, ${dataColors.teal})`,
+                    }}
+                    title={`${item.checkIns} check-ins`}
+                  />
+                </div>
+                <span className="text-small text-text-secondary font-medium mt-2">{item.month}</span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Line Chart Component with Gradient "Worm" Style
+function LineChart({ data }: { data: typeof eventData }) {
+  const maxValue = Math.max(...data.map((d) => d.registrations));
+  const width = 600;
+  const height = 240;
+  const padding = 40;
+
+  const points = data.map((item, index) => {
+    const x = padding + (index / (data.length - 1)) * (width - padding * 2);
+    const y = height - padding - ((item.registrations / maxValue) * (height - padding * 2));
+    return { x, y, value: item.registrations };
+  });
+
+  const pathData = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ');
+
+  // Create area path for fill under the line
+  const areaPath = `${pathData} L ${points[points.length - 1].x} ${height - padding} L ${padding} ${height - padding} Z`;
+
+  return (
+    <svg width="100%" height={height} viewBox={`0 0 ${width} ${height}`} className="overflow-visible">
+      <defs>
+        {/* Gradient for the line stroke */}
+        <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor={dataColors.coral} />
+          <stop offset="33%" stopColor={dataColors.orange} />
+          <stop offset="66%" stopColor={dataColors.darkBlue} />
+          <stop offset="100%" stopColor={dataColors.teal} />
+        </linearGradient>
+
+        {/* Gradient for the area fill */}
+        <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor={dataColors.teal} stopOpacity="0.2" />
+          <stop offset="100%" stopColor={dataColors.teal} stopOpacity="0.02" />
+        </linearGradient>
+      </defs>
+
+      {/* Grid lines */}
+      {[0, 25, 50, 75, 100].map((percent) => {
+        const y = height - padding - ((percent / 100) * (height - padding * 2));
+        return (
+          <line
+            key={percent}
+            x1={padding}
+            y1={y}
+            x2={width - padding}
+            y2={y}
+            stroke="#f0f0f0"
+            strokeWidth="1"
+          />
+        );
+      })}
+
+      {/* Area fill under the line */}
+      <path
+        d={areaPath}
+        fill="url(#areaGradient)"
+      />
+
+      {/* Thick line with gradient (the "worm") */}
+      <path
+        d={pathData}
+        fill="none"
+        stroke="url(#lineGradient)"
+        strokeWidth="6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+
+      {/* Points with gradient border */}
+      {points.map((point, index) => (
+        <g key={index}>
+          <circle
+            cx={point.x}
+            cy={point.y}
+            r="8"
+            fill="white"
+            stroke="url(#lineGradient)"
+            strokeWidth="3"
+            className="cursor-pointer transition-all"
+          />
+          <text
+            x={point.x}
+            y={height - 15}
+            textAnchor="middle"
+            className="text-xs fill-text-secondary font-medium"
+          >
+            {data[index].month}
+          </text>
+          {/* Value labels above points */}
+          <text
+            x={point.x}
+            y={point.y - 15}
+            textAnchor="middle"
+            className="text-xs fill-text-primary font-semibold"
+          >
+            {point.value}
+          </text>
+        </g>
+      ))}
+    </svg>
+  );
+}
+
+// Donut Chart Component
+function DonutChart({ data }: { data: typeof attendanceByType }) {
+  const total = data.reduce((sum, item) => sum + item.value, 0);
+  const size = 200;
+  const strokeWidth = 40;
+  const radius = (size - strokeWidth) / 2;
+  const circumference = 2 * Math.PI * radius;
+
+  let currentAngle = -90;
+
+  return (
+    <div className="flex flex-col md:flex-row items-center gap-8">
+      <svg width={size} height={size} className="flex-shrink-0">
+        {data.map((item, index) => {
+          const percentage = (item.value / total) * 100;
+          const dashArray = (percentage / 100) * circumference;
+          const dashOffset = -currentAngle * (circumference / 360);
+
+          currentAngle += (percentage / 100) * 360;
+
+          return (
+            <circle
+              key={index}
+              cx={size / 2}
+              cy={size / 2}
+              r={radius}
+              fill="none"
+              stroke={item.color}
+              strokeWidth={strokeWidth}
+              strokeDasharray={`${dashArray} ${circumference}`}
+              strokeDashoffset={dashOffset}
+              transform={`rotate(0 ${size / 2} ${size / 2})`}
+              className="transition-all hover:opacity-80 cursor-pointer"
+            />
+          );
+        })}
+
+        {/* Center text */}
+        <text
+          x={size / 2}
+          y={size / 2}
+          textAnchor="middle"
+          dominantBaseline="middle"
+          className="text-3xl font-bold fill-text-primary"
+        >
+          {total}
+        </text>
+        <text
+          x={size / 2}
+          y={size / 2 + 20}
+          textAnchor="middle"
+          dominantBaseline="middle"
+          className="text-xs fill-text-secondary"
+        >
+          Events
+        </text>
+      </svg>
+
+      <div className="space-y-3">
+        {data.map((item, index) => (
+          <div key={index} className="flex items-center gap-3">
+            <div
+              className="w-4 h-4 rounded-sm flex-shrink-0"
+              style={{ backgroundColor: item.color }}
+            />
+            <span className="text-small font-medium">{item.type}</span>
+            <span className="text-small text-text-secondary ml-auto">
+              {item.value} ({Math.round((item.value / total) * 100)}%)
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Progress Bar Component
+function ProgressBar({ label, value, max, color }: { label: string; value: number; max: number; color: string }) {
+  const percentage = (value / max) * 100;
+
+  return (
+    <div className="space-y-2">
+      <div className="flex justify-between text-small">
+        <span className="font-medium">{label}</span>
+        <span className="text-text-secondary">{value} / {max}</span>
+      </div>
+      <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+        <div
+          className="h-full rounded-full transition-all duration-500"
+          style={{ width: `${percentage}%`, backgroundColor: color }}
+        />
+      </div>
+    </div>
+  );
+}
+
 // Separate Left Sidebar for Playground
 function PlaygroundSidebar({ activeSection, onSectionClick, isOpen, onClose }: {
   activeSection: string;
@@ -19,6 +296,7 @@ function PlaygroundSidebar({ activeSection, onSectionClick, isOpen, onClose }: {
   const sections = [
     { id: "typography", label: "Typography", icon: "T" },
     { id: "colors", label: "Colors", icon: "🎨" },
+    { id: "data-viz", label: "Data Visualization", icon: "📊" },
     { id: "buttons", label: "Buttons", icon: "⬜" },
     { id: "badges", label: "Badges", icon: "🏷️" },
     { id: "event-cards", label: "Event Cards", icon: "🖼️" },
@@ -91,7 +369,7 @@ export default function PlaygroundPage() {
 
   // Track active section based on scroll position
   useEffect(() => {
-    const sectionIds = ["typography", "colors", "buttons", "badges", "event-cards", "simple-cards", "inputs"];
+    const sectionIds = ["typography", "colors", "data-viz", "buttons", "badges", "event-cards", "simple-cards", "inputs"];
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -154,7 +432,7 @@ export default function PlaygroundPage() {
               TripGlide Design System
             </h1>
             <p className="text-large text-text-secondary max-w-2xl">
-              Image-first, bold dark buttons, minimalist monochrome UI
+              Image-first, bold dark buttons, minimalist monochrome UI + quality data visualization
             </p>
           </div>
 
@@ -201,51 +479,275 @@ export default function PlaygroundPage() {
               <h2 className="text-h2 font-bold text-text-primary mb-6">
                 Color System
               </h2>
-              <div className="card">
-                <div className="space-y-6">
-                  {/* Monochrome */}
-                  <div>
-                    <p className="text-small font-medium text-text-secondary mb-3 uppercase tracking-wide">
-                      Monochrome Base
-                    </p>
-                    <div className="flex gap-3">
-                      <div className="flex flex-col items-center gap-2">
-                        <div className="w-16 h-16 rounded-md bg-text-primary" />
-                        <span className="text-tiny text-text-secondary">#212529</span>
+              <div className="space-y-6">
+                {/* Monochrome */}
+                <div className="card">
+                  <div className="space-y-6">
+                    <div>
+                      <p className="text-small font-medium text-text-secondary mb-3 uppercase tracking-wide">
+                        Monochrome Base
+                      </p>
+                      <div className="flex gap-3">
+                        <div className="flex flex-col items-center gap-2">
+                          <div className="w-16 h-16 rounded-md bg-text-primary" />
+                          <span className="text-tiny text-text-secondary">#212529</span>
+                        </div>
+                        <div className="flex flex-col items-center gap-2">
+                          <div className="w-16 h-16 rounded-md bg-white border-2 border-border-light" />
+                          <span className="text-tiny text-text-secondary">#FFFFFF</span>
+                        </div>
+                        <div className="flex flex-col items-center gap-2">
+                          <div className="w-16 h-16 rounded-md bg-bg-page" />
+                          <span className="text-tiny text-text-secondary">#F5F6F7</span>
+                        </div>
                       </div>
-                      <div className="flex flex-col items-center gap-2">
-                        <div className="w-16 h-16 rounded-md bg-white border-2 border-border-light" />
-                        <span className="text-tiny text-text-secondary">#FFFFFF</span>
-                      </div>
-                      <div className="flex flex-col items-center gap-2">
-                        <div className="w-16 h-16 rounded-md bg-bg-page" />
-                        <span className="text-tiny text-text-secondary">#F5F6F7</span>
+                    </div>
+
+                    {/* Status Colors */}
+                    <div>
+                      <p className="text-small font-medium text-text-secondary mb-3 uppercase tracking-wide">
+                        Status Colors (Badges Only)
+                      </p>
+                      <div className="flex gap-3 flex-wrap">
+                        <div className="flex flex-col items-center gap-2">
+                          <div className="w-16 h-16 rounded-md bg-status-success" />
+                          <span className="text-tiny text-text-secondary">Success</span>
+                        </div>
+                        <div className="flex flex-col items-center gap-2">
+                          <div className="w-16 h-16 rounded-md bg-status-warning" />
+                          <span className="text-tiny text-text-secondary">Warning</span>
+                        </div>
+                        <div className="flex flex-col items-center gap-2">
+                          <div className="w-16 h-16 rounded-md bg-status-info" />
+                          <span className="text-tiny text-text-secondary">Info</span>
+                        </div>
+                        <div className="flex flex-col items-center gap-2">
+                          <div className="w-16 h-16 rounded-md bg-status-error" />
+                          <span className="text-tiny text-text-secondary">Error</span>
+                        </div>
                       </div>
                     </div>
                   </div>
+                </div>
 
-                  {/* Status Colors */}
+                {/* Data Visualization Colors */}
+                <div className="card">
                   <div>
                     <p className="text-small font-medium text-text-secondary mb-3 uppercase tracking-wide">
-                      Status Colors (Badges Only)
+                      Data Visualization Colors
                     </p>
-                    <div className="flex gap-3 flex-wrap">
+                    <p className="text-small text-text-secondary mb-4">
+                      Specially designed for charts, graphs, and data-rich interfaces
+                    </p>
+                    <div className="flex gap-3 flex-wrap mb-6">
                       <div className="flex flex-col items-center gap-2">
-                        <div className="w-16 h-16 rounded-md bg-status-success" />
-                        <span className="text-tiny text-text-secondary">Success</span>
+                        <div className="w-20 h-20 rounded-md" style={{ backgroundColor: dataColors.coral }} />
+                        <span className="text-tiny font-medium text-text-primary">Coral</span>
+                        <span className="text-tiny text-text-secondary">#e66467</span>
                       </div>
                       <div className="flex flex-col items-center gap-2">
-                        <div className="w-16 h-16 rounded-md bg-status-warning" />
-                        <span className="text-tiny text-text-secondary">Warning</span>
+                        <div className="w-20 h-20 rounded-md" style={{ backgroundColor: dataColors.orange }} />
+                        <span className="text-tiny font-medium text-text-primary">Orange</span>
+                        <span className="text-tiny text-text-secondary">#f29639</span>
                       </div>
                       <div className="flex flex-col items-center gap-2">
-                        <div className="w-16 h-16 rounded-md bg-status-info" />
-                        <span className="text-tiny text-text-secondary">Info</span>
+                        <div className="w-20 h-20 rounded-md" style={{ backgroundColor: dataColors.darkBlue }} />
+                        <span className="text-tiny font-medium text-text-primary">Dark Blue</span>
+                        <span className="text-tiny text-text-secondary">#315771</span>
                       </div>
                       <div className="flex flex-col items-center gap-2">
-                        <div className="w-16 h-16 rounded-md bg-status-error" />
-                        <span className="text-tiny text-text-secondary">Error</span>
+                        <div className="w-20 h-20 rounded-md" style={{ backgroundColor: dataColors.teal }} />
+                        <span className="text-tiny font-medium text-text-primary">Teal</span>
+                        <span className="text-tiny text-text-secondary">#409f9c</span>
                       </div>
+                    </div>
+
+                    {/* Linear Gradients */}
+                    <div className="border-t border-border-light pt-6">
+                      <p className="text-small font-medium text-text-secondary mb-3 uppercase tracking-wide">
+                        Color Gradients
+                      </p>
+                      <div className="space-y-3">
+                        {/* All colors gradient */}
+                        <div>
+                          <div
+                            className="h-20 rounded-md"
+                            style={{
+                              background: `linear-gradient(90deg, ${dataColors.coral}, ${dataColors.orange}, ${dataColors.darkBlue}, ${dataColors.teal})`
+                            }}
+                          />
+                          <p className="text-tiny text-text-secondary mt-2">Full spectrum (Coral → Orange → Dark Blue → Teal)</p>
+                        </div>
+
+                        {/* Warm gradient */}
+                        <div>
+                          <div
+                            className="h-16 rounded-md"
+                            style={{
+                              background: `linear-gradient(90deg, ${dataColors.coral}, ${dataColors.orange})`
+                            }}
+                          />
+                          <p className="text-tiny text-text-secondary mt-2">Warm gradient (Coral → Orange)</p>
+                        </div>
+
+                        {/* Cool gradient */}
+                        <div>
+                          <div
+                            className="h-16 rounded-md"
+                            style={{
+                              background: `linear-gradient(90deg, ${dataColors.darkBlue}, ${dataColors.teal})`
+                            }}
+                          />
+                          <p className="text-tiny text-text-secondary mt-2">Cool gradient (Dark Blue → Teal)</p>
+                        </div>
+
+                        {/* Diagonal gradient */}
+                        <div>
+                          <div
+                            className="h-16 rounded-md"
+                            style={{
+                              background: `linear-gradient(135deg, ${dataColors.coral}, ${dataColors.teal})`
+                            }}
+                          />
+                          <p className="text-tiny text-text-secondary mt-2">Diagonal gradient (Coral → Teal)</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* Data Visualization */}
+            <section id="data-viz">
+              <h2 className="text-h2 font-bold text-text-primary mb-6">
+                Data Visualization
+              </h2>
+
+              {/* Stats Cards */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <div className="card text-center">
+                  <div className="text-4xl font-bold mb-2" style={{ color: dataColors.coral }}>
+                    564
+                  </div>
+                  <div className="text-small text-text-secondary uppercase tracking-wide">
+                    Total Events
+                  </div>
+                </div>
+                <div className="card text-center">
+                  <div className="text-4xl font-bold mb-2" style={{ color: dataColors.orange }}>
+                    12.4K
+                  </div>
+                  <div className="text-small text-text-secondary uppercase tracking-wide">
+                    Participants
+                  </div>
+                </div>
+                <div className="card text-center">
+                  <div className="text-4xl font-bold mb-2" style={{ color: dataColors.darkBlue }}>
+                    94%
+                  </div>
+                  <div className="text-small text-text-secondary uppercase tracking-wide">
+                    Check-in Rate
+                  </div>
+                </div>
+                <div className="card text-center">
+                  <div className="text-4xl font-bold mb-2" style={{ color: dataColors.teal }}>
+                    4.8
+                  </div>
+                  <div className="text-small text-text-secondary uppercase tracking-wide">
+                    Avg Rating
+                  </div>
+                </div>
+              </div>
+
+              {/* Bar Chart */}
+              <div className="card mb-8">
+                <h3 className="text-h3 font-semibold mb-6">
+                  Monthly Event Performance
+                </h3>
+                <BarChart data={eventData} />
+              </div>
+
+              {/* Line Chart */}
+              <div className="card mb-8">
+                <h3 className="text-h3 font-semibold mb-6">
+                  Registration Trend
+                </h3>
+                <LineChart data={eventData} />
+              </div>
+
+              {/* Donut Chart */}
+              <div className="card mb-8">
+                <h3 className="text-h3 font-semibold mb-6">
+                  Event Distribution by Type
+                </h3>
+                <DonutChart data={attendanceByType} />
+              </div>
+
+              {/* Progress Bars */}
+              <div className="card">
+                <h3 className="text-h3 font-semibold mb-6">
+                  Capacity Tracking
+                </h3>
+                <div className="space-y-4">
+                  <ProgressBar label="Conference Hall A" value={120} max={150} color={dataColors.coral} />
+                  <ProgressBar label="Workshop Room B" value={45} max={50} color={dataColors.orange} />
+                  <ProgressBar label="Networking Area" value={67} max={100} color={dataColors.darkBlue} />
+                  <ProgressBar label="Exhibition Space" value={230} max={300} color={dataColors.teal} />
+                </div>
+              </div>
+
+              {/* Gradient Progress Bars */}
+              <div className="card">
+                <h3 className="text-h3 font-semibold mb-6">
+                  Gradient Progress Indicators
+                </h3>
+                <div className="space-y-5">
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-small">
+                      <span className="font-medium">Event Registration Goal</span>
+                      <span className="text-text-secondary">145 / 200</span>
+                    </div>
+                    <div className="w-full h-3 bg-gray-100 rounded-full overflow-hidden">
+                      <div
+                        className="h-full rounded-full transition-all duration-500"
+                        style={{
+                          width: '72.5%',
+                          background: `linear-gradient(90deg, ${dataColors.coral}, ${dataColors.orange})`
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-small">
+                      <span className="font-medium">Speaker Confirmations</span>
+                      <span className="text-text-secondary">18 / 25</span>
+                    </div>
+                    <div className="w-full h-3 bg-gray-100 rounded-full overflow-hidden">
+                      <div
+                        className="h-full rounded-full transition-all duration-500"
+                        style={{
+                          width: '72%',
+                          background: `linear-gradient(90deg, ${dataColors.darkBlue}, ${dataColors.teal})`
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-small">
+                      <span className="font-medium">Venue Setup Progress</span>
+                      <span className="text-text-secondary">88%</span>
+                    </div>
+                    <div className="w-full h-3 bg-gray-100 rounded-full overflow-hidden">
+                      <div
+                        className="h-full rounded-full transition-all duration-500"
+                        style={{
+                          width: '88%',
+                          background: `linear-gradient(90deg, ${dataColors.coral}, ${dataColors.orange}, ${dataColors.darkBlue}, ${dataColors.teal})`
+                        }}
+                      />
                     </div>
                   </div>
                 </div>

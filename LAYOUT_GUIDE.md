@@ -1,8 +1,8 @@
-# Konekt Layout Guide - TripGlide Edition
+# Konekt. Layout Guide - TripGlide Edition
 
 ## 📐 Layout System Overview
 
-Tento dokument popisuje layoutovou architekturu projektu Konekt s TripGlide designem. Účelem je zajistit konzistentní implementaci napříč všemi stránkami.
+Tento dokument popisuje layoutovou architekturu projektu Konekt. s TripGlide designem. Účelem je zajistit konzistentní implementaci napříč všemi stránkami.
 
 ---
 

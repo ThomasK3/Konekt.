@@ -1,4 +1,4 @@
-# Konekt MVP - Page Build Plan
+# Konekt. MVP - Page Build Plan
 
 > **Prioritized implementation plan for all MVP pages with detailed specifications**
 

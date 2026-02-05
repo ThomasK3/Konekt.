@@ -1,4 +1,4 @@
-# Konekt Design System - TripGlide Edition
+# Konekt. Design System - TripGlide Edition
 
 > **Image-driven, bold & clean. Travel app aesthetics meet event management.**
 

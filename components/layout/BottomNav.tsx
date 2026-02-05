@@ -9,12 +9,13 @@ interface NavItem {
 }
 
 interface BottomNavProps {
+  items?: NavItem[];
   activeItem: string;
   onItemClick: (id: string) => void;
 }
 
-export function BottomNav({ activeItem, onItemClick }: BottomNavProps) {
-  const navItems: NavItem[] = [
+export function BottomNav({ items, activeItem, onItemClick }: BottomNavProps) {
+  const defaultNavItems: NavItem[] = [
     {
       id: "home",
       label: "Home",
@@ -59,6 +60,8 @@ export function BottomNav({ activeItem, onItemClick }: BottomNavProps) {
       ),
     },
   ];
+
+  const navItems = items || defaultNavItems;
 
   return (
     <nav className="bottom-nav">

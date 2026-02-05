@@ -1,4 +1,4 @@
-# Konekt MVP - Feature Specifications
+# Konekt. MVP - Feature Specifications
 
 > **Detailní rozpis každé funkce pro development. Reference pro prompty do Claude Code.**
 

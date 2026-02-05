@@ -1,12 +1,12 @@
-# Konekt Future - Phase 2+ Vision
+# Konekt. Future - Phase 2+ Vision
 
-> **Beyond MVP: Where Konekt could go next**
+> **Beyond MVP: Where Konekt. could go next**
 
 ---
 
 ## 🎯 Philosophy
 
-This document is a **living brain dump** of ideas, features, and expansion possibilities for Konekt after MVP launch. Not all of these will happen, and priorities will shift based on user feedback and market needs.
+This document is a **living brain dump** of ideas, features, and expansion possibilities for Konekt. after MVP launch. Not all of these will happen, and priorities will shift based on user feedback and market needs.
 
 **Principle:** Ship MVP first. Learn from real users. Then build what matters.
 
@@ -58,7 +58,7 @@ This document is a **living brain dump** of ideas, features, and expansion possi
 - **Slack/Discord** - Post-event community channels
 - **Notion** - Sync participant data
 
-**Why:** Organizers already use other tools - make Konekt the hub.
+**Why:** Organizers already use other tools - make Konekt. the hub.
 
 #### 6. **Ticketing & Payments** (Optional)
 - Paid event support
@@ -210,7 +210,7 @@ Visualize the startup/business ecosystem through event data.
 ### Advanced Enterprise Features:
 
 #### 1. **Multi-Tenant Admin Panel**
-For Konekt team to manage white-label clients.
+For Konekt. team to manage white-label clients.
 
 **Capabilities:**
 - Spin up new client instances
@@ -228,7 +228,7 @@ Allow clients to build/buy additional modules.
 - Gamification module (points, badges, leaderboards)
 
 **Business model:**
-- Konekt builds core modules
+- Konekt. builds core modules
 - Third-party developers build niche modules
 - Revenue share (70/30 split)
 
@@ -384,7 +384,7 @@ AI-powered event descriptions, session summaries, speaker bios.
 
 ## 🧪 Experimental Ideas (Maybe Someday)
 
-### 1. **Konekt Score**
+### 1. **Konekt. Score**
 Personal networking effectiveness metric.
 
 **Factors:**
@@ -393,7 +393,7 @@ Personal networking effectiveness metric.
 - Follow-up rate (did you actually connect on LinkedIn?)
 - Reciprocal connections (do people want to meet you?)
 
-**Use case:** Gamification, but also signal to organizers ("invite high-Konekt-score people").
+**Use case:** Gamification, but also signal to organizers ("invite high-Konekt.-score people").
 
 **Risk:** Could feel invasive or elitist. Tread carefully.
 
@@ -410,14 +410,14 @@ Tinder-style interface for finding events.
 
 ---
 
-### 3. **Konekt Spaces**
+### 3. **Konekt. Spaces**
 Physical co-working space integration.
 
 **Concept:**
 - Partner with co-working spaces
-- Konekt screens at entrances (show today's events)
-- Konekt kiosks (quick check-in)
-- Konekt-branded event lounges
+- Konekt. screens at entrances (show today's events)
+- Konekt. kiosks (quick check-in)
+- Konekt.-branded event lounges
 
 **Why:** Physical presence strengthens brand.
 
@@ -432,7 +432,7 @@ Networking with a twist - help people find co-founders, advisors, investors.
 
 ---
 
-### 5. **Konekt Community Platform**
+### 5. **Konekt. Community Platform**
 Full-fledged community platform around events.
 
 **Features:**
@@ -484,14 +484,14 @@ Important to define boundaries:
 
 ## 🔮 The Big Vision (5+ Years)
 
-**Konekt becomes the nervous system of Central European business community.**
+**Konekt. becomes the nervous system of Central European business community.**
 
-- Every significant startup/business event uses Konekt
+- Every significant startup/business event uses Konekt.
 - Ecosystem data provides unique insights
 - AI predicts trends before they're obvious
-- Investors use Konekt data for deal sourcing
-- Founders use Konekt to build their networks
-- Event organizers see Konekt as essential infrastructure
+- Investors use Konekt. data for deal sourcing
+- Founders use Konekt. to build their networks
+- Event organizers see Konekt. as essential infrastructure
 
 **We're not just an event app. We're the connective tissue of the ecosystem.**
 
@@ -505,7 +505,7 @@ Important to define boundaries:
 4. **Experimentation:** Test risky ideas with small user groups first
 5. **Archive:** Remove ideas that don't make sense anymore
 
-**This is a living document. Update it as Konekt evolves.**
+**This is a living document. Update it as Konekt. evolves.**
 
 ---
 
