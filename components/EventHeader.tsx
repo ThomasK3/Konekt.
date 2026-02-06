@@ -23,6 +23,7 @@ interface Event {
 
 interface EventHeaderProps {
   event: Event;
+  onShare?: () => void;
 }
 
 function formatDate(dateString: string): string {
@@ -41,30 +42,44 @@ function getStatusClass(status: string): string {
     : "bg-yellow-100 text-yellow-800";
 }
 
-export default function EventHeader({ event }: EventHeaderProps) {
+export default function EventHeader({ event, onShare }: EventHeaderProps) {
   const router = useRouter();
 
   return (
     <div className="mb-8">
-      {/* Back Button - Above Cover */}
-      <button
-        onClick={() => router.back()}
-        className="text-text-secondary hover:text-text-primary flex items-center gap-2 mb-4 transition-colors"
-      >
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 20 20"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
+      {/* Top Actions Bar */}
+      <div className="flex items-center justify-between mb-4">
+        {/* Back Button */}
+        <button
+          onClick={() => router.back()}
+          className="text-text-secondary hover:text-text-primary flex items-center gap-2 transition-colors"
         >
-          <path d="M12 5L7 10L12 15" />
-        </svg>
-        Back to Events
-      </button>
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M12 5L7 10L12 15" />
+          </svg>
+          Back to Events
+        </button>
+
+        {/* Share Button */}
+        {onShare && event.status === "published" && (
+          <button
+            onClick={onShare}
+            className="flex items-center gap-2 px-4 py-2 bg-white hover:bg-bg-light border border-border-light rounded-md transition-colors text-text-primary font-medium text-small"
+          >
+            <span className="text-base">📤</span>
+            Share Event
+          </button>
+        )}
+      </div>
 
       {/* Cover Image */}
       <div className="relative w-full h-64 md:h-80 rounded-3xl overflow-hidden">

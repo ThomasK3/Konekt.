@@ -81,7 +81,6 @@ const mockEvents = [
 
 export default function OrganizerDashboard() {
   const router = useRouter();
-  const [activeNav, setActiveNav] = useState("dashboard");
   const [activeSidebar, setActiveSidebar] = useState("overview");
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -129,19 +128,6 @@ export default function OrganizerDashboard() {
 
   const handleCreateEvent = () => {
     router.push("/organizer/events/new");
-  };
-
-  const handleNavClick = (itemId: string) => {
-    setActiveNav(itemId);
-
-    if (itemId === "events") {
-      router.push("/organizer/events");
-    } else if (itemId === "new") {
-      router.push("/organizer/events/new");
-    } else if (itemId === "profile") {
-      router.push("/organizer/profile");
-    }
-    // 'dashboard' stays on current page
   };
 
   return (
@@ -532,7 +518,7 @@ export default function OrganizerDashboard() {
       </main>
 
       {/* Bottom Navigation */}
-      <BottomNav activeItem={activeNav} onItemClick={handleNavClick} />
+      <BottomNav />
     </div>
   );
 }

@@ -445,4 +445,28 @@
     @apply font-medium;
     text-shadow: 0 2px 8px rgba(0,0,0,0.3);
   }
+
+  /* QR Scanner Styles */
+  #qr-reader {
+    border: none !important;
+  }
+
+  #qr-reader video {
+    border-radius: 16px !important;
+    width: 100% !important;
+    height: auto !important;
+    display: block !important;
+  }
+
+  #qr-reader__dashboard {
+    display: none !important;
+  }
+
+  #qr-reader__scan_region {
+    border-radius: 16px !important;
+  }
+
+  #qr-reader__camera_selection {
+    margin-top: 16px !important;
+  }
 }

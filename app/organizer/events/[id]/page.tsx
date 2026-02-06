@@ -9,6 +9,8 @@ import OverviewTab from "@/components/tabs/OverviewTab";
 import ProgramTab from "@/components/tabs/ProgramTab";
 import ParticipantsTab from "@/components/tabs/ParticipantsTab";
 import CheckinTab from "@/components/tabs/CheckinTab";
+import { ShareEventModal } from "@/components/ShareEventModal";
+import { getEventById } from "@/lib/mockEventsStore";
 
 interface Event {
   id: string;
@@ -75,47 +77,34 @@ export default function EventDetailPage({
   const [activeTab, setActiveTab] = useState(
     searchParams.get("tab") || "overview"
   );
-  const [activeNav, setActiveNav] = useState("events");
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Event data
   const [event, setEvent] = useState<Event | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Share modal state
+  const [shareModalOpen, setShareModalOpen] = useState(false);
+
   // Fetch event data
   useEffect(() => {
     const fetchEvent = async () => {
       setIsLoading(true);
       try {
-        // TODO: Fetch from Supabase
-        // For now: mock data
-        await new Promise((resolve) => setTimeout(resolve, 500));
+        // Fetch from mock store
+        await new Promise((resolve) => setTimeout(resolve, 300));
 
-        // Mock event data
-        const mockEvent: Event = {
-          id: eventId,
-          name: "Startup Meetup Prague",
-          date: "2026-03-15",
-          time: "18:00",
-          location: "Karlin Hall, Prague",
-          description:
-            "Monthly networking event for Prague startup community. Connect with founders, investors, and enthusiasts.",
-          coverImage:
-            "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80",
-          capacity: 100,
-          visibility: "public",
-          status: "published",
-          stats: {
-            registered: 50,
-            checkedIn: 0,
-            attendanceRate: 0,
-            noShows: 0,
-          },
-        };
+        const storedEvent = getEventById(eventId);
 
-        setEvent(mockEvent);
+        if (storedEvent) {
+          setEvent(storedEvent);
+        } else {
+          // Event not found
+          setEvent(null);
+        }
       } catch (error) {
         console.error("Error fetching event:", error);
+        setEvent(null);
       } finally {
         setIsLoading(false);
       }
@@ -197,11 +186,15 @@ export default function EventDetailPage({
       {/* Main Content */}
       <main className="main-content">
         {/* Event Header - Shows on ALL tabs */}
-        <EventHeader event={event} />
+        <EventHeader event={event} onShare={() => setShareModalOpen(true)} />
 
         {/* Tab Content */}
         {activeTab === "overview" && (
-          <OverviewTab event={event} setEvent={setEvent} />
+          <OverviewTab
+            event={event}
+            setEvent={setEvent}
+            onShare={() => setShareModalOpen(true)}
+          />
         )}
         {activeTab === "program" && <ProgramTab eventId={eventId} />}
         {activeTab === "participants" && <ParticipantsTab eventId={eventId} />}
@@ -209,22 +202,17 @@ export default function EventDetailPage({
       </main>
 
       {/* Bottom Nav */}
-      <BottomNav
-        items={[
-          { id: "dashboard", label: "Dashboard", icon: "🏠" },
-          { id: "events", label: "Events", icon: "📊" },
-          { id: "new", label: "New Event", icon: "➕" },
-          { id: "profile", label: "Profile", icon: "👤" },
-        ]}
-        activeItem={activeNav}
-        onItemClick={(id) => {
-          setActiveNav(id);
-          if (id === "dashboard") router.push("/organizer/dashboard");
-          if (id === "new") router.push("/organizer/events/new");
-          if (id === "profile") router.push("/organizer/profile");
-          // 'events' stays on current page
-        }}
-      />
+      <BottomNav />
+
+      {/* Share Event Modal */}
+      {event && (
+        <ShareEventModal
+          isOpen={shareModalOpen}
+          onClose={() => setShareModalOpen(false)}
+          eventId={event.id}
+          eventTitle={event.name}
+        />
+      )}
     </div>
   );
 }

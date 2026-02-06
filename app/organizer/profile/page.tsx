@@ -377,7 +377,6 @@ function SettingsTab() {
 
 export default function ProfilePage() {
   const router = useRouter();
-  const [activeNav, setActiveNav] = useState("profile");
   const [activeTab, setActiveTab] = useState("profile");
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -482,22 +481,7 @@ export default function ProfilePage() {
       </main>
 
       {/* Bottom Nav */}
-      <BottomNav
-        items={[
-          { id: "dashboard", label: "Dashboard", icon: "🏠" },
-          { id: "events", label: "Events", icon: "📊" },
-          { id: "new", label: "New Event", icon: "➕" },
-          { id: "profile", label: "Profile", icon: "👤" },
-        ]}
-        activeItem={activeNav}
-        onItemClick={(id) => {
-          setActiveNav(id);
-          if (id === "dashboard") router.push("/organizer/dashboard");
-          if (id === "events") router.push("/organizer/events");
-          if (id === "new") router.push("/organizer/events/new");
-          // 'profile' stays on current page
-        }}
-      />
+      <BottomNav />
     </div>
   );
 }

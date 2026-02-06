@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { Cell } from "@/components/cells/Cell";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { QRScanner } from "@/components/QRScanner";
+import { getEventById, updateEvent } from "@/lib/mockEventsStore";
 
 interface Participant {
   id: string;
@@ -82,7 +84,72 @@ export default function CheckinTab({ eventId }: CheckinTabProps) {
   const percentage =
     totalCount > 0 ? Math.round((checkedInCount / totalCount) * 100) : 0;
 
-  // Mock scan (for demo without camera)
+  // Update event stats in store
+  const updateEventStats = (updatedParticipants: Participant[]) => {
+    const event = getEventById(eventId);
+    if (!event) return;
+
+    const checkedIn = updatedParticipants.filter(
+      (p) => p.status === "checked-in"
+    ).length;
+    const registered = updatedParticipants.length;
+    const attendanceRate =
+      registered > 0 ? Math.round((checkedIn / registered) * 100) : 0;
+
+    updateEvent(eventId, {
+      stats: {
+        registered,
+        checkedIn,
+        attendanceRate,
+        noShows: registered - checkedIn,
+      },
+    });
+  };
+
+  // Handle real QR code scan
+  const handleQRScan = (decodedText: string) => {
+    console.log("Scanned QR code:", decodedText);
+
+    // Find participant by QR code (or ID if QR contains participant ID)
+    const participant = participants.find(
+      (p) => p.qrCode === decodedText || p.id === decodedText
+    );
+
+    if (!participant) {
+      setScanError("QR code not recognized. Participant not found!");
+      setTimeout(() => setScanError(null), 3000);
+      return;
+    }
+
+    if (participant.status === "checked-in") {
+      setScanError(`${participant.name} is already checked in!`);
+      setTimeout(() => setScanError(null), 3000);
+      return;
+    }
+
+    // Check in the participant
+    const updated = participants.map((p) =>
+      p.id === participant.id
+        ? {
+            ...p,
+            status: "checked-in" as const,
+            checkedInAt: new Date().toISOString(),
+          }
+        : p
+    );
+    setParticipants(updated);
+    setLastCheckin(participant);
+
+    // Update event stats in store
+    updateEventStats(updated);
+
+    console.log("Checked in:", participant.name);
+
+    // Clear success after 3 seconds
+    setTimeout(() => setLastCheckin(null), 3000);
+  };
+
+  // Mock scan (fallback for demo)
   const handleMockScan = () => {
     const notCheckedIn = participants.filter((p) => p.status !== "checked-in");
 
@@ -99,13 +166,19 @@ export default function CheckinTab({ eventId }: CheckinTabProps) {
     // Check in
     const updated = participants.map((p) =>
       p.id === random.id
-        ? { ...p, status: "checked-in" as const, checkedInAt: new Date().toISOString() }
+        ? {
+            ...p,
+            status: "checked-in" as const,
+            checkedInAt: new Date().toISOString(),
+          }
         : p
     );
     setParticipants(updated);
     setLastCheckin(random);
 
-    // TODO: Update Supabase
+    // Update event stats in store
+    updateEventStats(updated);
+
     console.log("Checked in:", random.name);
 
     // Clear success after 3 seconds
@@ -154,30 +227,33 @@ export default function CheckinTab({ eventId }: CheckinTabProps) {
         <div className="flex flex-col items-center justify-center py-8">
           {isScanning ? (
             <div className="w-full max-w-md">
-              {/* Camera Viewfinder Placeholder */}
-              <div className="aspect-square bg-gray-900 rounded-2xl mb-4 relative overflow-hidden">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-64 h-64 border-4 border-white/50 rounded-2xl"></div>
-                </div>
-                <p className="absolute bottom-4 left-0 right-0 text-center text-white text-sm">
-                  Position QR code in the frame
-                </p>
+              {/* Real QR Scanner with Camera */}
+              <QRScanner
+                onScanSuccess={handleQRScan}
+                onScanError={(error) => {
+                  setScanError(error);
+                  setTimeout(() => setScanError(null), 5000);
+                }}
+                isActive={isScanning}
+              />
+
+              {/* Action Buttons */}
+              <div className="mt-6 space-y-3">
+                {/* Mock Scan Button (fallback for demo) */}
+                <button
+                  onClick={handleMockScan}
+                  className="btn-secondary w-full"
+                >
+                  🎲 Mock Scan (Demo Fallback)
+                </button>
+
+                <button
+                  onClick={() => setIsScanning(false)}
+                  className="btn-secondary w-full"
+                >
+                  Stop Scanning
+                </button>
               </div>
-
-              {/* Mock Scan Button (for demo) */}
-              <button
-                onClick={handleMockScan}
-                className="btn-primary w-full mb-3"
-              >
-                🎲 Mock Scan (Demo)
-              </button>
-
-              <button
-                onClick={() => setIsScanning(false)}
-                className="btn-secondary w-full"
-              >
-                Stop Scanning
-              </button>
             </div>
           ) : (
             <div className="text-center max-w-md">
@@ -193,7 +269,7 @@ export default function CheckinTab({ eventId }: CheckinTabProps) {
                 onClick={() => setIsScanning(true)}
                 className="btn-primary"
               >
-                Start Scanner
+                Start Camera Scanner
               </button>
             </div>
           )}

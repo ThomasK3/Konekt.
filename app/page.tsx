@@ -19,12 +19,12 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/organizer/dashboard">
               <Button variant="primary">
-                Get Started Free
+                Organizer Dashboard
               </Button>
             </Link>
-            <Link href="/playground">
+            <Link href="/dashboard">
               <Button variant="secondary">
-                View Demo
+                Attendee Dashboard
               </Button>
             </Link>
           </div>
@@ -306,12 +306,12 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/organizer/dashboard">
               <button className="px-7 py-3.5 bg-white text-text-primary rounded-lg font-semibold hover:bg-white/90 transition-colors">
-                Start Free Trial
+                Organizer Dashboard
               </button>
             </Link>
-            <Link href="/playground">
+            <Link href="/dashboard">
               <button className="px-7 py-3.5 bg-transparent text-white border-2 border-white rounded-lg font-semibold hover:bg-white/10 transition-colors">
-                See Demo
+                Attendee Dashboard
               </button>
             </Link>
           </div>

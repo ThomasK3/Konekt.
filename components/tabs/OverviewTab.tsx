@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { StatCard } from "@/components/cards/StatCard";
 import { Cell } from "@/components/cells/Cell";
+import { updateEvent, deleteEvent } from "@/lib/mockEventsStore";
 
 interface Event {
   id: string;
@@ -27,6 +28,7 @@ interface Event {
 interface OverviewTabProps {
   event: Event;
   setEvent: (event: Event) => void;
+  onShare?: () => void;
 }
 
 function formatDate(dateString: string): string {
@@ -222,21 +224,27 @@ function EventEditForm({
   );
 }
 
-export default function OverviewTab({ event, setEvent }: OverviewTabProps) {
+export default function OverviewTab({
+  event,
+  setEvent,
+  onShare,
+}: OverviewTabProps) {
   const router = useRouter();
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState<Event>({ ...event });
 
   const handleSave = async () => {
     try {
-      // TODO: Update in Supabase
-      console.log("Saving event:", formData);
+      // Update in mock store
+      const success = updateEvent(event.id, formData);
 
-      setEvent(formData);
-      setIsEditing(false);
-
-      // Show success feedback (simple alert for MVP)
-      alert("Event updated successfully!");
+      if (success) {
+        setEvent(formData);
+        setIsEditing(false);
+        alert("Event updated successfully!");
+      } else {
+        throw new Error("Event not found in store");
+      }
     } catch (error) {
       console.error("Error updating event:", error);
       alert("Failed to update event");
@@ -253,10 +261,15 @@ export default function OverviewTab({ event, setEvent }: OverviewTabProps) {
     }
 
     try {
-      // TODO: Delete from Supabase
-      console.log("Deleting event:", event.id);
+      // Delete from mock store
+      const success = deleteEvent(event.id);
 
-      router.push("/organizer/dashboard");
+      if (success) {
+        alert("Event deleted successfully!");
+        router.push("/organizer/events");
+      } else {
+        throw new Error("Event not found in store");
+      }
     } catch (error) {
       console.error("Error deleting event:", error);
       alert("Failed to delete event");
@@ -264,10 +277,14 @@ export default function OverviewTab({ event, setEvent }: OverviewTabProps) {
   };
 
   const handleShare = () => {
-    const eventUrl = `${window.location.origin}/events/${event.id}`;
-
-    navigator.clipboard.writeText(eventUrl);
-    alert("Event link copied to clipboard!");
+    if (onShare) {
+      onShare();
+    } else {
+      // Fallback for legacy behavior
+      const eventUrl = `${window.location.origin}/events/${event.id}`;
+      navigator.clipboard.writeText(eventUrl);
+      alert("Event link copied to clipboard!");
+    }
   };
 
   return (

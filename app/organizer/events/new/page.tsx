@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ImageUpload } from "@/components/ui/ImageUpload";
+import { createEvent } from "@/lib/mockEventsStore";
 
 interface FormData {
   name: string;
@@ -74,17 +75,49 @@ export default function CreateEventPage() {
 
     setIsSubmitting(true);
 
-    // Mock submission for MVP
-    console.log("Creating event:", {
-      ...formData,
-      status: isDraft ? "draft" : "published",
-    });
+    try {
+      // Convert cover image to data URL for storage (mock)
+      let coverImageUrl: string | undefined;
+      if (formData.coverImage) {
+        coverImageUrl = await new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result as string);
+          reader.readAsDataURL(formData.coverImage!);
+        });
+      }
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+      // Create the event
+      const newEvent = createEvent({
+        name: formData.name.trim(),
+        date: formData.date,
+        time: formData.time,
+        location: formData.location.trim(),
+        description: formData.description.trim(),
+        coverImage: coverImageUrl,
+        capacity: parseInt(formData.capacity),
+        visibility: formData.visibility,
+        status: isDraft ? "draft" : "published",
+      });
 
-    // Navigate to events list or dashboard
-    router.push("/organizer/events");
+      console.log("Event created successfully:", newEvent.id);
+
+      // Simulate API delay
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      // Show success message
+      if (isDraft) {
+        alert("Event saved as draft!");
+      } else {
+        alert("Event created successfully!");
+      }
+
+      // Redirect to the newly created event detail page
+      router.push(`/organizer/events/${newEvent.id}`);
+    } catch (error) {
+      console.error("Error creating event:", error);
+      alert("Failed to create event. Please try again.");
+      setIsSubmitting(false);
+    }
   };
 
   const handleCancel = () => {

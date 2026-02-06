@@ -13,8 +13,8 @@ const navigation = [
 export function Navigation() {
   const pathname = usePathname();
 
-  // Hide navigation on organizer pages (they have their own Bottom Nav + Left Sidebar)
-  if (pathname.startsWith("/organizer")) {
+  // Only show navigation on the root "/" page
+  if (pathname !== "/") {
     return null;
   }
 

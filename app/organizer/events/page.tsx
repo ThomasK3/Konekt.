@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { BottomNav } from "@/components/layout/BottomNav";
 import { LeftSidebar } from "@/components/layout/LeftSidebar";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { Cell } from "@/components/cells/Cell";
+import { getAllEvents, Event as StoredEvent } from "@/lib/mockEventsStore";
 
 interface Event {
   id: string;
@@ -20,83 +21,6 @@ interface Event {
   status: "draft" | "published";
   visibility: "public" | "private" | "invite-only";
 }
-
-const mockEvents: Event[] = [
-  {
-    id: "1",
-    title: "Startup Meetup Prague",
-    date: "2026-03-15",
-    time: "18:00",
-    location: "Karlin Hall, Prague",
-    description: "Monthly networking event for Prague startup community",
-    coverImage:
-      "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80",
-    capacity: 100,
-    registered: 50,
-    status: "published",
-    visibility: "public",
-  },
-  {
-    id: "2",
-    title: "Tech Talks: AI in Business",
-    date: "2026-03-22",
-    time: "19:00",
-    location: "Tech Hub Prague",
-    description: "Expert panel on AI adoption in enterprise",
-    capacity: 75,
-    registered: 35,
-    status: "published",
-    visibility: "public",
-  },
-  {
-    id: "3",
-    title: "Founders Dinner",
-    date: "2026-02-28",
-    time: "20:00",
-    location: "Restaurant XYZ",
-    description: "Exclusive dinner for startup founders",
-    capacity: 30,
-    registered: 28,
-    status: "published",
-    visibility: "invite-only",
-  },
-  {
-    id: "4",
-    title: "Workshop: Product-Market Fit",
-    date: "2026-01-15",
-    time: "14:00",
-    location: "Innovation Lab",
-    description: "Hands-on workshop on finding PMF",
-    capacity: 40,
-    registered: 40,
-    status: "published",
-    visibility: "public",
-  },
-  {
-    id: "5",
-    title: "Summer Hackathon",
-    date: "2026-04-10",
-    time: "09:00",
-    location: "TBD",
-    description: "24-hour coding challenge",
-    capacity: 100,
-    registered: 12,
-    status: "draft",
-    visibility: "public",
-  },
-  {
-    id: "6",
-    title: "Investor Pitch Night",
-    date: "2026-02-01",
-    time: "18:30",
-    location: "Coworking Space Alpha",
-    description: "Present your startup to investors",
-    capacity: 50,
-    registered: 45,
-    status: "published",
-    visibility: "private",
-  },
-];
 
 function formatDate(dateString: string): string {
   const date = new Date(dateString);
@@ -124,39 +48,59 @@ function getEventStatus(event: Event): "live" | "upcoming" | "past" {
 export default function EventsListPage() {
   const router = useRouter();
   const [activeSidebar, setActiveSidebar] = useState("all");
-  const [activeNav, setActiveNav] = useState("events");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [events, setEvents] = useState<Event[]>([]);
+
+  // Load events from store on mount
+  useEffect(() => {
+    const storedEvents = getAllEvents();
+    // Convert stored events to the format expected by this page
+    const formattedEvents: Event[] = storedEvents.map((e) => ({
+      id: e.id,
+      title: e.name, // Store uses "name", this page uses "title"
+      date: e.date,
+      time: e.time,
+      location: e.location,
+      description: e.description,
+      coverImage: e.coverImage,
+      capacity: e.capacity,
+      registered: e.stats.registered,
+      status: e.status,
+      visibility: e.visibility,
+    }));
+    setEvents(formattedEvents);
+  }, []);
 
   // Filter events based on active sidebar item
   const filteredEvents = useMemo(() => {
     if (activeSidebar === "all") {
-      return mockEvents.filter((e) => e.status === "published");
+      return events.filter((e) => e.status === "published");
     }
 
     if (activeSidebar === "live") {
-      return mockEvents.filter(
+      return events.filter(
         (e) => e.status === "published" && getEventStatus(e) === "live"
       );
     }
 
     if (activeSidebar === "upcoming") {
-      return mockEvents.filter(
+      return events.filter(
         (e) => e.status === "published" && getEventStatus(e) === "upcoming"
       );
     }
 
     if (activeSidebar === "past") {
-      return mockEvents.filter(
+      return events.filter(
         (e) => e.status === "published" && getEventStatus(e) === "past"
       );
     }
 
     if (activeSidebar === "drafts") {
-      return mockEvents.filter((e) => e.status === "draft");
+      return events.filter((e) => e.status === "draft");
     }
 
-    return mockEvents;
-  }, [activeSidebar]);
+    return events;
+  }, [activeSidebar, events]);
 
   const handleEventClick = (eventId: string) => {
     router.push(`/organizer/events/${eventId}`);
@@ -399,22 +343,7 @@ export default function EventsListPage() {
       </main>
 
       {/* Bottom Nav */}
-      <BottomNav
-        items={[
-          { id: "dashboard", label: "Dashboard", icon: "🏠" },
-          { id: "events", label: "Events", icon: "📊" },
-          { id: "new", label: "New Event", icon: "➕" },
-          { id: "profile", label: "Profile", icon: "👤" },
-        ]}
-        activeItem={activeNav}
-        onItemClick={(id) => {
-          setActiveNav(id);
-          if (id === "dashboard") router.push("/organizer/dashboard");
-          if (id === "new") router.push("/organizer/events/new");
-          if (id === "profile") router.push("/organizer/profile");
-          // 'events' stays on current page
-        }}
-      />
+      <BottomNav />
     </div>
   );
 }

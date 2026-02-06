@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Cell } from "@/components/cells/Cell";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { StatCard } from "@/components/cards/StatCard";
+import { AddParticipantModal } from "@/components/AddParticipantModal";
 
 interface Participant {
   id: string;
@@ -92,11 +93,13 @@ function StatusBadge({ status }: { status: string }) {
 }
 
 export default function ParticipantsTab({ eventId }: ParticipantsTabProps) {
-  const [participants] = useState<Participant[]>(mockParticipants);
+  const [participants, setParticipants] =
+    useState<Participant[]>(mockParticipants);
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<
     "all" | "registered" | "checked-in" | "cancelled"
   >("all");
+  const [addModalOpen, setAddModalOpen] = useState(false);
 
   // Filter logic
   const filteredParticipants = participants.filter((p) => {
@@ -117,6 +120,29 @@ export default function ParticipantsTab({ eventId }: ParticipantsTabProps) {
     registered: participants.filter((p) => p.status === "registered").length,
     checkedIn: participants.filter((p) => p.status === "checked-in").length,
     cancelled: participants.filter((p) => p.status === "cancelled").length,
+  };
+
+  // Add participant
+  const handleAddParticipant = (participantData: {
+    name: string;
+    email: string;
+    company?: string;
+    role?: string;
+  }) => {
+    const newParticipant: Participant = {
+      id: `${Date.now()}`, // Generate temporary ID
+      name: participantData.name,
+      email: participantData.email,
+      company: participantData.company,
+      role: participantData.role,
+      status: "registered",
+      checkedInAt: null,
+    };
+
+    setParticipants([...participants, newParticipant]);
+
+    // Show success feedback
+    alert(`${participantData.name} has been added successfully!`);
   };
 
   // Export CSV
@@ -151,13 +177,21 @@ export default function ParticipantsTab({ eventId }: ParticipantsTabProps) {
         <h2 className="text-h2 font-bold text-text-primary">
           Participants ({filteredParticipants.length})
         </h2>
-        <button
-          onClick={handleExport}
-          className="btn-secondary"
-          disabled={filteredParticipants.length === 0}
-        >
-          📥 Export CSV
-        </button>
+        <div className="flex gap-3">
+          <button
+            onClick={() => setAddModalOpen(true)}
+            className="btn-primary"
+          >
+            ➕ Add Participant
+          </button>
+          <button
+            onClick={handleExport}
+            className="btn-secondary"
+            disabled={filteredParticipants.length === 0}
+          >
+            📥 Export CSV
+          </button>
+        </div>
       </div>
 
       {/* Filters */}
@@ -307,6 +341,13 @@ export default function ParticipantsTab({ eventId }: ParticipantsTabProps) {
           </div>
         )}
       </Cell>
+
+      {/* Add Participant Modal */}
+      <AddParticipantModal
+        isOpen={addModalOpen}
+        onClose={() => setAddModalOpen(false)}
+        onAdd={handleAddParticipant}
+      />
     </div>
   );
 }
