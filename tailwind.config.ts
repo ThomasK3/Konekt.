@@ -11,7 +11,7 @@ const config: Config = {
       // Font Family
       fontFamily: {
         sans: [
-          'Instrument Sans',
+          'var(--font-instrument-sans)',
           '-apple-system',
           'BlinkMacSystemFont',
           'Segoe UI',
@@ -23,6 +23,14 @@ const config: Config = {
         // TripGlide Monochrome Base
         white: "#FFFFFF",
         black: "#000000",
+
+        // Meui Creative Brand Colors
+        "meui-green": "#56745C",
+        "meui-orange": "#FFB59E",
+        "meui-beige": "#F3E9D7",
+        "meui-turquoise": "#97D8D8",
+        "meui-pink": "#F3AEED",
+        "meui-purple": "#C5B3E6",
 
         // Backgrounds
         "bg-page": "#F5F6F7",
