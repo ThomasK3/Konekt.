@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { AttendeeLayout } from "@/components/layout/AttendeeLayout";
 
-export default async function MyEventsLayout({
+export default async function ExploreLayout({
   children,
 }: {
   children: React.ReactNode;

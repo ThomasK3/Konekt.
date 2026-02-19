@@ -120,6 +120,60 @@ export async function getMyConnectionIds(): Promise<string[]> {
   return (data ?? []).map((c) => c.connected_user_id);
 }
 
+export interface LeaderboardEntry {
+  user_id: string;
+  name: string | null;
+  company: string | null;
+  networking_points: number;
+}
+
+export async function getEventLeaderboard(
+  eventId: string,
+  limit = 5
+): Promise<{ leaderboard: LeaderboardEntry[]; currentUserRank: number | null; currentUserEntry: LeaderboardEntry | null }> {
+  const supabase = createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  // Get all registered users for this event with their points
+  const { data, error } = await supabase
+    .from("registrations")
+    .select("user_id, profile:profiles!user_id (name, company, networking_points)")
+    .eq("event_id", eventId)
+    .in("status", ["registered", "checked_in"]);
+
+  if (error || !data) {
+    console.error("LEADERBOARD ERROR:", error?.message);
+    return { leaderboard: [], currentUserRank: null, currentUserEntry: null };
+  }
+
+  const entries = (data as unknown as { user_id: string; profile: { name: string | null; company: string | null; networking_points: number | null } }[])
+    .map((r) => ({
+      user_id: r.user_id,
+      name: r.profile?.name ?? null,
+      company: r.profile?.company ?? null,
+      networking_points: r.profile?.networking_points ?? 0,
+    }))
+    .sort((a, b) => b.networking_points - a.networking_points);
+
+  const top = entries.slice(0, limit);
+
+  let currentUserRank: number | null = null;
+  let currentUserEntry: LeaderboardEntry | null = null;
+
+  if (user) {
+    const idx = entries.findIndex((e) => e.user_id === user.id);
+    if (idx !== -1) {
+      currentUserRank = idx + 1;
+      currentUserEntry = entries[idx];
+    }
+  }
+
+  return { leaderboard: top, currentUserRank, currentUserEntry };
+}
+
 export async function getNetworkingPoints(): Promise<number> {
   const supabase = createClient();
 

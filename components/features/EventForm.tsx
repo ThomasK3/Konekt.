@@ -249,6 +249,27 @@ export function EventForm({ initialData }: EventFormProps) {
               </div>
             </div>
           </div>
+
+          {/* Public catalog toggle */}
+          <label className="flex items-center gap-3 cursor-pointer">
+            <div className="relative">
+              <input
+                type="checkbox"
+                className="sr-only peer"
+                {...register("is_public")}
+              />
+              <div className="w-11 h-6 bg-darkblue/10 rounded-full peer-checked:bg-teal transition-colors" />
+              <div className="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow-sm peer-checked:translate-x-5 transition-transform" />
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-darkblue">
+                Veřejný event
+              </p>
+              <p className="text-xs text-darkblue/40 font-medium">
+                Zobrazit v katalogu eventů pro všechny účastníky
+              </p>
+            </div>
+          </label>
         </CardContent>
       </Card>
 

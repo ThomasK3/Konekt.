@@ -28,6 +28,7 @@ export async function createEventAction(formData: FormData) {
   const description = formData.get("description") as string;
   const capacity = Number(formData.get("capacity")) || 30;
   const visibility = (formData.get("visibility") as string) || "public";
+  const is_public = formData.get("is_public") === "true";
   const coverImage = formData.get("cover_image") as File | null;
 
   // Upload cover image if provided
@@ -62,6 +63,7 @@ export async function createEventAction(formData: FormData) {
       location,
       capacity,
       visibility,
+      is_public,
       cover_image_url,
       organizer_id: user.id,
       invite_code: generateInviteCode(),
@@ -107,6 +109,7 @@ export async function updateEventAction(eventId: string, formData: FormData) {
   const description = formData.get("description") as string;
   const capacity = Number(formData.get("capacity")) || 30;
   const visibility = (formData.get("visibility") as string) || "public";
+  const is_public = formData.get("is_public") === "true";
   const coverImage = formData.get("cover_image") as File | null;
 
   // Keep existing image unless a new one is uploaded
@@ -141,6 +144,7 @@ export async function updateEventAction(eventId: string, formData: FormData) {
       location,
       capacity,
       visibility,
+      is_public,
       cover_image_url,
     })
     .eq("id", eventId);
