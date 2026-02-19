@@ -6,6 +6,8 @@ import { createClient } from "@/lib/supabase/server";
 import { Card, CardContent } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { RegistrationForm } from "@/components/features/RegistrationForm";
+import { PublicAgenda } from "@/components/features/PublicAgenda";
+import { getAgendaItems } from "@/lib/actions/agenda";
 
 export default async function EventPublicPage({
   params,
@@ -64,6 +66,8 @@ export default async function EventPublicPage({
     alreadyRegistered = !!existingReg;
   }
 
+  const agendaItems = await getAgendaItems(event.id);
+
   return (
     <div className="min-h-screen bg-background">
       {/* Simple top nav */}
@@ -83,7 +87,7 @@ export default async function EventPublicPage({
         )}
       </nav>
 
-      <div className="max-w-3xl mx-auto px-6 pb-16 space-y-8">
+      <div className="max-w-3xl mx-auto px-6 pb-16 space-y-12">
         {/* HERO CARD */}
         <Card className="p-0 overflow-hidden rounded-3xl">
           {/* Cover */}
@@ -168,6 +172,9 @@ export default async function EventPublicPage({
             )}
           </CardContent>
         </Card>
+
+        {/* PUBLIC AGENDA */}
+        <PublicAgenda items={agendaItems} />
 
         {/* REGISTRATION SECTION */}
         {alreadyRegistered ? (

@@ -1,11 +1,8 @@
-"use client";
-
-import { useState } from "react";
 import Image from "next/image";
-import { CalendarDays, MapPin, QrCode, CalendarCheck } from "lucide-react";
+import Link from "next/link";
+import { CalendarDays, MapPin, ArrowRight, CalendarCheck, CheckCircle2 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
-import { QRCodeModal } from "./QRCodeModal";
 
 interface EventTicketCardProps {
   event: {
@@ -15,25 +12,15 @@ interface EventTicketCardProps {
     location: string | null;
     cover_image_url: string | null;
   };
-  qrCodeData: string;
   status: string;
 }
 
-export function EventTicketCard({
-  event,
-  qrCodeData,
-  status,
-}: EventTicketCardProps) {
-  const [qrOpen, setQrOpen] = useState(false);
-
-  const statusLabel =
-    status === "checked_in" ? "Check-in OK" : "Registrováno";
-  const statusColor =
-    status === "checked_in" ? "bg-teal/20 text-teal" : "bg-coral/20 text-coral";
+export function EventTicketCard({ event, status }: EventTicketCardProps) {
+  const isCheckedIn = status === "checked_in";
 
   return (
-    <>
-      <Card className="overflow-hidden hover:-translate-y-1 transition-all">
+    <Link href={`/my-events/${event.id}`}>
+      <Card className="overflow-hidden hover:-translate-y-1 hover:shadow-float transition-all cursor-pointer h-full">
         {/* Mini cover */}
         <div className="relative h-32">
           {event.cover_image_url ? (
@@ -56,9 +43,20 @@ export function EventTicketCard({
               {event.name}
             </h3>
             <span
-              className={`shrink-0 px-2.5 py-1 rounded-full text-xs font-bold ${statusColor}`}
+              className={`shrink-0 px-2.5 py-1 rounded-full text-xs font-bold ${
+                isCheckedIn
+                  ? "bg-teal/20 text-teal"
+                  : "bg-coral/20 text-coral"
+              }`}
             >
-              {statusLabel}
+              {isCheckedIn ? (
+                <span className="flex items-center gap-1">
+                  <CheckCircle2 className="w-3 h-3" />
+                  Odbaveno
+                </span>
+              ) : (
+                "Registrováno"
+              )}
             </span>
           </div>
 
@@ -81,23 +79,12 @@ export function EventTicketCard({
             )}
           </div>
 
-          <Button
-            size="sm"
-            onClick={() => setQrOpen(true)}
-            className="w-full gap-2"
-          >
-            <QrCode className="w-4 h-4" />
-            Zobrazit QR kód
+          <Button size="sm" variant="secondary" className="w-full gap-2">
+            Otevřít vstupenku
+            <ArrowRight className="w-4 h-4" />
           </Button>
         </CardContent>
       </Card>
-
-      <QRCodeModal
-        isOpen={qrOpen}
-        onClose={() => setQrOpen(false)}
-        eventName={event.name}
-        qrCodeData={qrCodeData}
-      />
-    </>
+    </Link>
   );
 }

@@ -13,6 +13,8 @@ import { Card, CardContent } from "@/components/ui/Card";
 import { EventActions } from "@/components/features/EventActions";
 import { EventDetailTabs } from "@/components/features/EventDetailTabs";
 import { getEventParticipants } from "@/lib/actions/participants";
+import { getAgendaItems } from "@/lib/actions/agenda";
+import { getEventAnalytics } from "@/lib/actions/analytics";
 
 export default async function EventDetailPage({
   params,
@@ -48,7 +50,11 @@ export default async function EventDetailPage({
     ? Math.round((registered / event.capacity) * 100)
     : 0;
 
-  const participants = await getEventParticipants(params.id);
+  const [participants, agendaItems, analytics] = await Promise.all([
+    getEventParticipants(params.id),
+    getAgendaItems(params.id),
+    getEventAnalytics(params.id),
+  ]);
 
   const statusLabel = event.status === "published" ? "Publikováno" : "Draft";
   const statusColor =
@@ -182,6 +188,8 @@ export default async function EventDetailPage({
         eventName={event.name}
         descriptionHtml={event.description}
         participants={participants}
+        agendaItems={agendaItems}
+        analytics={analytics}
       />
     </div>
   );

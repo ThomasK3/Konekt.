@@ -2,14 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, CalendarDays, PlusCircle, User } from "lucide-react";
+import { LayoutDashboard, CalendarDays, PlusCircle, Settings } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navItems = [
   { href: "/organizer/dashboard", label: "Přehled", icon: LayoutDashboard },
   { href: "/organizer/events", label: "Eventy", icon: CalendarDays },
   { href: "/organizer/events/new", label: "Nový", icon: PlusCircle },
-  { href: "/organizer/profile", label: "Profil", icon: User },
+  { href: "/organizer/settings", label: "Nastavení", icon: Settings },
 ];
 
 export function BottomNav() {

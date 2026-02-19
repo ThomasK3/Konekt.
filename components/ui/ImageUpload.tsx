@@ -6,12 +6,13 @@ import { cn } from "@/lib/utils";
 
 interface ImageUploadProps {
   name: string;
+  defaultImage?: string | null;
   onChange?: (file: File | null) => void;
 }
 
-export function ImageUpload({ name, onChange }: ImageUploadProps) {
+export function ImageUpload({ name, defaultImage, onChange }: ImageUploadProps) {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [preview, setPreview] = useState<string | null>(null);
+  const [preview, setPreview] = useState<string | null>(defaultImage ?? null);
 
   function handleFile(file: File | null) {
     if (file) {

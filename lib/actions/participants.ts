@@ -45,3 +45,32 @@ export async function getEventParticipants(
 
   return (data as unknown as Participant[]) ?? [];
 }
+
+export interface PublicAttendee {
+  id: string;
+  name: string | null;
+  company: string | null;
+  job_title: string | null;
+}
+
+export async function getPublicAttendees(
+  eventId: string
+): Promise<PublicAttendee[]> {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from("registrations")
+    .select("user_id, user:profiles!user_id (name, company, job_title)")
+    .eq("event_id", eventId)
+    .in("status", ["registered", "checked_in"]);
+
+  if (error) {
+    console.error("SUPABASE CHYBA PŘI NAČÍTÁNÍ VEŘEJNÝCH ÚČASTNÍKŮ:", error.message);
+    return [];
+  }
+
+  return ((data as unknown as { user_id: string; user: Omit<PublicAttendee, "id"> }[]) ?? [])
+    .filter((r) => r.user?.name)
+    .map((r) => ({ id: r.user_id, ...r.user }))
+    .sort((a, b) => (a.name ?? "").localeCompare(b.name ?? "", "cs"));
+}

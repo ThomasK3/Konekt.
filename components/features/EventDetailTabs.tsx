@@ -4,7 +4,11 @@ import { useState } from "react";
 import dynamic from "next/dynamic";
 import { Card, CardContent } from "@/components/ui/Card";
 import { ParticipantsTab } from "./ParticipantsTab";
+import { ProgramTab } from "./ProgramTab";
+import { AnalyticsTab } from "./AnalyticsTab";
 import type { Participant } from "@/lib/actions/participants";
+import type { AgendaItem } from "@/lib/actions/agenda";
+import type { EventAnalytics } from "@/lib/actions/analytics";
 
 // Lazy-load QRScanner so camera only mounts when tab is active
 const QRScanner = dynamic(
@@ -12,7 +16,7 @@ const QRScanner = dynamic(
   { ssr: false }
 );
 
-const tabItems = ["Přehled", "Program", "Účastníci", "Check-in"] as const;
+const tabItems = ["Přehled", "Program", "Účastníci", "Check-in", "Analytika"] as const;
 type Tab = (typeof tabItems)[number];
 
 interface EventDetailTabsProps {
@@ -20,6 +24,8 @@ interface EventDetailTabsProps {
   eventName: string;
   descriptionHtml: string | null;
   participants: Participant[];
+  agendaItems: AgendaItem[];
+  analytics: EventAnalytics;
 }
 
 export function EventDetailTabs({
@@ -27,6 +33,8 @@ export function EventDetailTabs({
   eventName,
   descriptionHtml,
   participants,
+  agendaItems,
+  analytics,
 }: EventDetailTabsProps) {
   const [activeTab, setActiveTab] = useState<Tab>("Přehled");
 
@@ -62,13 +70,7 @@ export function EventDetailTabs({
       )}
 
       {activeTab === "Program" && (
-        <Card>
-          <CardContent className="flex flex-col items-center text-center py-12 gap-2">
-            <p className="text-darkblue/40 font-medium">
-              Program bude brzy k dispozici.
-            </p>
-          </CardContent>
-        </Card>
+        <ProgramTab items={agendaItems} eventId={eventId} />
       )}
 
       {activeTab === "Účastníci" && (
@@ -76,6 +78,8 @@ export function EventDetailTabs({
       )}
 
       {activeTab === "Check-in" && <QRScanner eventId={eventId} />}
+
+      {activeTab === "Analytika" && <AnalyticsTab data={analytics} />}
     </>
   );
 }
